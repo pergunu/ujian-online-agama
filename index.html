@@ -924,95 +924,6 @@
             color: #a94442;
             border: 1px solid #ebccd1;
         }
-        
-        /* Question Bank Editor Styles */
-        .question-editor {
-            margin-top: 20px;
-        }
-        
-        .question-bank-tabs {
-            display: flex;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .question-bank-tab {
-            padding: 10px 15px;
-            cursor: pointer;
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-bottom: none;
-            margin-right: 5px;
-            border-radius: 5px 5px 0 0;
-        }
-        
-        .question-bank-tab.active {
-            background: white;
-            border-bottom: 1px solid white;
-            margin-bottom: -1px;
-        }
-        
-        .question-bank-content {
-            display: none;
-            padding: 15px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 0 0 5px 5px;
-        }
-        
-        .question-bank-content.active {
-            display: block;
-        }
-        
-        .question-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-        }
-        
-        .question-item {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-        }
-        
-        .question-item:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .question-item.active {
-            background-color: #e6f7ff;
-        }
-        
-        .question-form {
-            margin-top: 15px;
-        }
-        
-        .question-form textarea {
-            min-height: 100px;
-        }
-        
-        .option-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .option-item input[type="radio"] {
-            margin-right: 10px;
-        }
-        
-        .option-item input[type="text"] {
-            flex-grow: 1;
-        }
-        
-        .add-option-btn {
-            margin-bottom: 15px;
-        }
-        
-        .add-question-btn {
-            margin-top: 15px;
-        }
     </style>
 </head>
 <body>
@@ -1301,110 +1212,6 @@
                     </div>
                     
                     <div class="admin-section">
-                        <h5>Manajemen Bank Soal</h5>
-                        <div class="question-editor">
-                            <div class="question-bank-tabs">
-                                <div class="question-bank-tab active" data-level="SD">SD</div>
-                                <div class="question-bank-tab" data-level="SMP">SMP</div>
-                                <div class="question-bank-tab" data-level="SMA/SMK">SMA/SMK</div>
-                            </div>
-                            
-                            <div class="question-bank-content active" data-level="SD">
-                                <div class="question-list" id="question-list-SD">
-                                    <!-- Questions will be loaded here -->
-                                </div>
-                                
-                                <div class="question-form">
-                                    <input type="hidden" id="edit-question-index">
-                                    <div class="form-group">
-                                        <label class="form-label">Pertanyaan</label>
-                                        <textarea id="question-text-input" class="form-control" style="color: #333;"></textarea>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">Opsi Jawaban</label>
-                                        <div id="options-container-input">
-                                            <!-- Options will be added here -->
-                                        </div>
-                                        <button type="button" class="btn btn-info add-option-btn" id="add-option-btn">Tambah Opsi</button>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">Penjelasan</label>
-                                        <textarea id="explanation-input" class="form-control" style="color: #333;"></textarea>
-                                    </div>
-                                    
-                                    <button type="button" class="btn btn-success" id="save-question-btn">Simpan Soal</button>
-                                    <button type="button" class="btn btn-danger" id="delete-question-btn" style="display: none;">Hapus Soal</button>
-                                    <button type="button" class="btn btn-info add-question-btn" id="add-question-btn">Tambah Soal Baru</button>
-                                </div>
-                            </div>
-                            
-                            <div class="question-bank-content" data-level="SMP">
-                                <div class="question-list" id="question-list-SMP">
-                                    <!-- Questions will be loaded here -->
-                                </div>
-                                
-                                <div class="question-form">
-                                    <input type="hidden" id="edit-question-index-SMP">
-                                    <div class="form-group">
-                                        <label class="form-label">Pertanyaan</label>
-                                        <textarea id="question-text-input-SMP" class="form-control" style="color: #333;"></textarea>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">Opsi Jawaban</label>
-                                        <div id="options-container-input-SMP">
-                                            <!-- Options will be added here -->
-                                        </div>
-                                        <button type="button" class="btn btn-info add-option-btn" id="add-option-btn-SMP">Tambah Opsi</button>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">Penjelasan</label>
-                                        <textarea id="explanation-input-SMP" class="form-control" style="color: #333;"></textarea>
-                                    </div>
-                                    
-                                    <button type="button" class="btn btn-success" id="save-question-btn-SMP">Simpan Soal</button>
-                                    <button type="button" class="btn btn-danger" id="delete-question-btn-SMP" style="display: none;">Hapus Soal</button>
-                                    <button type="button" class="btn btn-info add-question-btn" id="add-question-btn-SMP">Tambah Soal Baru</button>
-                                </div>
-                            </div>
-                            
-                            <div class="question-bank-content" data-level="SMA/SMK">
-                                <div class="question-list" id="question-list-SMA/SMK">
-                                    <!-- Questions will be loaded here -->
-                                </div>
-                                
-                                <div class="question-form">
-                                    <input type="hidden" id="edit-question-index-SMA/SMK">
-                                    <div class="form-group">
-                                        <label class="form-label">Pertanyaan</label>
-                                        <textarea id="question-text-input-SMA/SMK" class="form-control" style="color: #333;"></textarea>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">Opsi Jawaban</label>
-                                        <div id="options-container-input-SMA/SMK">
-                                            <!-- Options will be added here -->
-                                        </div>
-                                        <button type="button" class="btn btn-info add-option-btn" id="add-option-btn-SMA/SMK">Tambah Opsi</button>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">Penjelasan</label>
-                                        <textarea id="explanation-input-SMA/SMK" class="form-control" style="color: #333;"></textarea>
-                                    </div>
-                                    
-                                    <button type="button" class="btn btn-success" id="save-question-btn-SMA/SMK">Simpan Soal</button>
-                                    <button type="button" class="btn btn-danger" id="delete-question-btn-SMA/SMK" style="display: none;">Hapus Soal</button>
-                                    <button type="button" class="btn btn-info add-question-btn" id="add-question-btn-SMA/SMK">Tambah Soal Baru</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="admin-section">
                         <h5>Manajemen Peserta</h5>
                         <div class="search-box">
                             <input type="text" id="participant-search" class="search-input" placeholder="Cari peserta berdasarkan nama, NIS, atau kode sertifikat...">
@@ -1592,7 +1399,6 @@
         let examTimer;
         let examTimeLeft = 120 * 60; // 120 minutes in seconds
         let selectedParticipants = [];
-        let currentQuestionBankLevel = 'SD';
         
         // Audio elements
         const buttonSound = document.getElementById('button-sound');
@@ -1624,7 +1430,7 @@
         };
 
         // Question bank structure with levels (Agama Islam only)
-        let QUESTION_BANK = JSON.parse(localStorage.getItem('questionBank')) || {
+        let QUESTION_BANK = {
             'SD': {
                 'Agama Islam': [
                     {
@@ -2010,25 +1816,8 @@
                 radio.addEventListener('change', showEditGradeSelection);
             });
             
-            // Question bank tabs
-            document.querySelectorAll('.question-bank-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const level = this.dataset.level;
-                    showQuestionBankTab(level);
-                });
-            });
-            
-            // Question bank buttons
-            document.getElementById('add-question-btn').addEventListener('click', addNewQuestion);
-            document.getElementById('save-question-btn').addEventListener('click', saveQuestion);
-            document.getElementById('delete-question-btn').addEventListener('click', deleteQuestion);
-            document.getElementById('add-option-btn').addEventListener('click', addOption);
-            
             // Load participants data for admin panel
             loadParticipantsData();
-            
-            // Load question bank for admin panel
-            loadQuestionBank();
             
             // Auto uppercase for edit fullname field
             document.getElementById('edit-fullname').addEventListener('input', function() {
@@ -2068,10 +1857,6 @@
         
         function saveAdminSettings() {
             localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
-        }
-        
-        function saveQuestionBank() {
-            localStorage.setItem('questionBank', JSON.stringify(QUESTION_BANK));
         }
         
         function handleLogin() {
@@ -2231,14 +2016,11 @@
                 questions = QUESTION_BANK['SD']['Agama Islam'];
             }
             
-            // Ensure we have enough questions
-            const maxQuestions = Math.min(adminSettings.questionCount, questions.length);
-            
             // Randomize questions if setting is enabled
             if (adminSettings.randomizeQuestions) {
-                questions = shuffleArray(questions).slice(0, maxQuestions);
+                questions = shuffleArray(questions).slice(0, adminSettings.questionCount);
             } else {
-                questions = questions.slice(0, maxQuestions);
+                questions = questions.slice(0, adminSettings.questionCount);
             }
             
             // Initialize exam data
@@ -3057,239 +2839,6 @@
             saveAdminSettings();
             
             alert('Pengaturan berhasil disimpan!');
-        }
-        
-        // Question Bank Functions
-        function loadQuestionBank() {
-            // Load questions for each level
-            loadQuestionsForLevel('SD');
-            loadQuestionsForLevel('SMP');
-            loadQuestionsForLevel('SMA/SMK');
-        }
-        
-        function loadQuestionsForLevel(level) {
-            const questionList = document.getElementById(`question-list-${level}`);
-            questionList.innerHTML = '';
-            
-            if (!QUESTION_BANK[level] || !QUESTION_BANK[level]['Agama Islam'] || QUESTION_BANK[level]['Agama Islam'].length === 0) {
-                questionList.innerHTML = '<div class="question-item">Belum ada soal untuk tingkat ini</div>';
-                return;
-            }
-            
-            QUESTION_BANK[level]['Agama Islam'].forEach((question, index) => {
-                const questionItem = document.createElement('div');
-                questionItem.className = 'question-item';
-                questionItem.dataset.index = index;
-                questionItem.innerHTML = `
-                    <strong>Soal ${index + 1}:</strong> ${question.question.substring(0, 50)}${question.question.length > 50 ? '...' : ''}
-                `;
-                
-                questionItem.addEventListener('click', function() {
-                    editQuestion(level, index);
-                });
-                
-                questionList.appendChild(questionItem);
-            });
-        }
-        
-        function showQuestionBankTab(level) {
-            // Hide all tabs
-            document.querySelectorAll('.question-bank-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            document.querySelectorAll('.question-bank-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.querySelector(`.question-bank-tab[data-level="${level}"]`).classList.add('active');
-            document.querySelector(`.question-bank-content[data-level="${level}"]`).classList.add('active');
-            
-            // Set current level
-            currentQuestionBankLevel = level;
-            
-            // Reset form
-            resetQuestionForm(level);
-        }
-        
-        function editQuestion(level, index) {
-            const question = QUESTION_BANK[level]['Agama Islam'][index];
-            
-            // Set form fields
-            document.getElementById(`question-text-input${level === 'SD' ? '' : '-' + level}`).value = question.question;
-            
-            // Clear options
-            const optionsContainer = document.getElementById(`options-container-input${level === 'SD' ? '' : '-' + level}`);
-            optionsContainer.innerHTML = '';
-            
-            // Add options
-            question.options.forEach((option, i) => {
-                addOption(level, option, i === question.correctAnswer);
-            });
-            
-            // Set explanation
-            document.getElementById(`explanation-input${level === 'SD' ? '' : '-' + level}`).value = question.explanation;
-            
-            // Set index
-            document.getElementById(`edit-question-index${level === 'SD' ? '' : '-' + level}`).value = index;
-            
-            // Show delete button
-            document.getElementById(`delete-question-btn${level === 'SD' ? '' : '-' + level}`).style.display = 'inline-block';
-            
-            // Highlight selected question
-            document.querySelectorAll(`#question-list-${level} .question-item`).forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            document.querySelector(`#question-list-${level} .question-item[data-index="${index}"]`).classList.add('active');
-        }
-        
-        function addNewQuestion() {
-            resetQuestionForm(currentQuestionBankLevel);
-        }
-        
-        function resetQuestionForm(level) {
-            document.getElementById(`question-text-input${level === 'SD' ? '' : '-' + level}`).value = '';
-            document.getElementById(`options-container-input${level === 'SD' ? '' : '-' + level}`).innerHTML = '';
-            document.getElementById(`explanation-input${level === 'SD' ? '' : '-' + level}`).value = '';
-            document.getElementById(`edit-question-index${level === 'SD' ? '' : '-' + level}`).value = '';
-            document.getElementById(`delete-question-btn${level === 'SD' ? '' : '-' + level}`).style.display = 'none';
-            
-            // Add two empty options by default
-            addOption(level);
-            addOption(level);
-            
-            // Remove active class from all question items
-            document.querySelectorAll(`#question-list-${level} .question-item`).forEach(item => {
-                item.classList.remove('active');
-            });
-        }
-        
-        function addOption(level, text = '', isCorrect = false) {
-            const optionsContainer = document.getElementById(`options-container-input${level === 'SD' ? '' : '-' + level}`);
-            const optionCount = optionsContainer.children.length;
-            const optionId = `option-${level}-${optionCount}`;
-            
-            const optionDiv = document.createElement('div');
-            optionDiv.className = 'option-item';
-            
-            optionDiv.innerHTML = `
-                <input type="radio" name="correct-option${level === 'SD' ? '' : '-' + level}" ${isCorrect ? 'checked' : ''} value="${optionCount}">
-                <input type="text" class="form-control" value="${text}" placeholder="Masukkan opsi jawaban" style="color: #333;">
-                <button type="button" class="btn btn-danger" onclick="removeOption(this)">Hapus</button>
-            `;
-            
-            optionsContainer.appendChild(optionDiv);
-        }
-        
-        function removeOption(button) {
-            const optionsContainer = button.parentElement.parentElement;
-            button.parentElement.remove();
-            
-            // Renumber the remaining options
-            const optionItems = optionsContainer.querySelectorAll('.option-item');
-            optionItems.forEach((item, index) => {
-                const radio = item.querySelector('input[type="radio"]');
-                radio.value = index;
-            });
-        }
-        
-        function saveQuestion() {
-            const level = currentQuestionBankLevel;
-            const questionText = document.getElementById(`question-text-input${level === 'SD' ? '' : '-' + level}`).value.trim();
-            const explanation = document.getElementById(`explanation-input${level === 'SD' ? '' : '-' + level}`).value.trim();
-            const optionsContainer = document.getElementById(`options-container-input${level === 'SD' ? '' : '-' + level}`);
-            const optionItems = optionsContainer.querySelectorAll('.option-item');
-            
-            // Validate inputs
-            if (!questionText) {
-                alert('Pertanyaan tidak boleh kosong');
-                return;
-            }
-            
-            if (optionItems.length < 2) {
-                alert('Minimal harus ada 2 opsi jawaban');
-                return;
-            }
-            
-            // Get selected correct answer
-            const correctAnswer = parseInt(document.querySelector(`input[name="correct-option${level === 'SD' ? '' : '-' + level}"]:checked`)?.value);
-            
-            if (isNaN(correctAnswer)) {
-                alert('Silakan pilih jawaban yang benar');
-                return;
-            }
-            
-            // Collect options
-            const options = [];
-            optionItems.forEach(item => {
-                const input = item.querySelector('input[type="text"]');
-                options.push(input.value.trim());
-            });
-            
-            // Create question object
-            const question = {
-                question: questionText,
-                options: options,
-                correctAnswer: correctAnswer,
-                explanation: explanation
-            };
-            
-            // Get index if editing
-            const index = document.getElementById(`edit-question-index${level === 'SD' ? '' : '-' + level}`).value;
-            
-            // Initialize level and subject if not exists
-            if (!QUESTION_BANK[level]) {
-                QUESTION_BANK[level] = {};
-            }
-            
-            if (!QUESTION_BANK[level]['Agama Islam']) {
-                QUESTION_BANK[level]['Agama Islam'] = [];
-            }
-            
-            // Add or update question
-            if (index !== '') {
-                QUESTION_BANK[level]['Agama Islam'][index] = question;
-            } else {
-                QUESTION_BANK[level]['Agama Islam'].push(question);
-            }
-            
-            // Save to localStorage
-            saveQuestionBank();
-            
-            // Reload question list
-            loadQuestionsForLevel(level);
-            
-            // Reset form
-            resetQuestionForm(level);
-            
-            alert('Soal berhasil disimpan!');
-        }
-        
-        function deleteQuestion() {
-            const level = currentQuestionBankLevel;
-            const index = document.getElementById(`edit-question-index${level === 'SD' ? '' : '-' + level}`).value;
-            
-            if (index === '') return;
-            
-            if (!confirm('Apakah Anda yakin ingin menghapus soal ini?')) {
-                return;
-            }
-            
-            // Remove question
-            QUESTION_BANK[level]['Agama Islam'].splice(index, 1);
-            
-            // Save to localStorage
-            saveQuestionBank();
-            
-            // Reload question list
-            loadQuestionsForLevel(level);
-            
-            // Reset form
-            resetQuestionForm(level);
-            
-            alert('Soal berhasil dihapus!');
         }
     </script>
 </body>
