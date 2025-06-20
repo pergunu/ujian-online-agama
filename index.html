@@ -1375,6 +1375,7 @@
         let examTimer;
         let examTimeLeft = 120 * 60; // 120 minutes in seconds
         let selectedParticipants = [];
+        let questionOrder = []; // Untuk menyimpan urutan soal yang diacak
         
         // Audio elements
         const buttonSound = document.getElementById('button-sound');
@@ -1432,7 +1433,42 @@
                         correctAnswer: 4,
                         explanation: "Shalat Isya adalah shalat wajib yang dilaksanakan pada malam hari setelah masuk waktu Isya hingga sebelum waktu Subuh. Shalat Maghrib dilaksanakan setelah matahari terbenam, tetapi masih termasuk waktu sore."
                     },
-                    // Tambahkan soal-soal SD lainnya di sini
+                    {
+                        question: "Nabi Muhammad SAW menerima wahyu pertama di...",
+                        options: [
+                            "A. Masjidil Haram",
+                            "B. Gua Hira",
+                            "C. Bukit Thursina",
+                            "D. Masjid Nabawi",
+                            "E. Padang Arafah"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Nabi Muhammad SAW menerima wahyu pertama di Gua Hira ketika beliau sedang berkhalwat. Wahyu pertama yang turun adalah surat Al-Alaq ayat 1-5."
+                    },
+                    {
+                        question: "Kitab suci yang diturunkan kepada Nabi Musa AS adalah...",
+                        options: [
+                            "A. Injil",
+                            "B. Zabur",
+                            "C. Taurat",
+                            "D. Al-Quran",
+                            "E. Shuhuf"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Kitab Taurat diturunkan kepada Nabi Musa AS. Kitab ini berisi syariat dan petunjuk untuk Bani Israil."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk rukun Islam adalah...",
+                        options: [
+                            "A. Shalat lima waktu",
+                            "B. Berbakti kepada orang tua",
+                            "C. Menuntut ilmu",
+                            "D. Berdakwah",
+                            "E. Berjihad"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Shalat lima waktu adalah salah satu dari lima rukun Islam. Rukun Islam lainnya: 1) Syahadat, 2) Shalat, 3) Zakat, 4) Puasa Ramadhan, 5) Haji bagi yang mampu."
+                    }
                 ]
             },
             'SMP': {
@@ -1461,7 +1497,42 @@
                         correctAnswer: 0,
                         explanation: "Ayat tersebut berarti 'Dan tidaklah Kami mengutusmu (Muhammad) melainkan sebagai rahmat bagi seluruh alam' (QS. Al-Anbiya: 107). Ini menunjukkan bahwa Nabi Muhammad SAW diutus sebagai rahmat untuk semua makhluk, bukan hanya manusia tetapi juga jin dan alam semesta."
                     },
-                    // Tambahkan soal-soal SMP lainnya di sini
+                    {
+                        question: "Hukum melaksanakan shalat Jumat bagi laki-laki adalah...",
+                        options: [
+                            "A. Fardhu 'ain",
+                            "B. Fardhu kifayah",
+                            "C. Sunnah muakkad",
+                            "D. Sunnah ghairu muakkad",
+                            "E. Mubah"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Shalat Jumat hukumnya fardhu 'ain bagi setiap muslim laki-laki yang telah baligh, berakal, merdeka, dan tidak memiliki uzur syar'i. Dalilnya terdapat dalam QS. Al-Jumu'ah ayat 9."
+                    },
+                    {
+                        question: "Perhatikan hadis berikut: 'Man ṣallā 'alayya ṣallā Allāhu 'alayhi 'asyra' (HR. Muslim). Arti hadis tersebut adalah...",
+                        options: [
+                            "A. Barangsiapa yang shalat untukku, maka Allah akan memberinya pahala",
+                            "B. Barangsiapa yang bershalawat kepadaku sekali, maka Allah akan bershalawat kepadanya sepuluh kali",
+                            "C. Barangsiapa yang mengikuti sunnahku, maka dia termasuk golonganku",
+                            "D. Barangsiapa yang membaca shalawat, maka dosanya diampuni",
+                            "E. Barangsiapa yang mencintaiku, maka dia akan bersamaku di surga"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Hadis tersebut artinya 'Barangsiapa yang bershalawat kepadaku sekali, maka Allah akan bershalawat kepadanya sepuluh kali' (HR. Muslim). Ini menunjukkan keutamaan membaca shalawat kepada Nabi Muhammad SAW."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk contoh akhlak terpuji adalah...",
+                        options: [
+                            "A. Sombong ketika mendapat prestasi",
+                            "B. Berbohong untuk kebaikan",
+                            "C. Membantu teman yang kesulitan",
+                            "D. Menghina agama lain",
+                            "E. Memutuskan silaturahmi"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Membantu teman yang kesulitan termasuk akhlak terpuji yang diajarkan dalam Islam. Nabi Muhammad SAW bersabda: 'Allah akan menolong hamba-Nya selama hamba itu menolong saudaranya' (HR. Muslim)."
+                    }
                 ]
             },
             'SMA/SMK': {
@@ -1490,7 +1561,42 @@
                         correctAnswer: 1,
                         explanation: "Pernyataan yang benar adalah 1) Anak laki-laki mendapat bagian 2x anak perempuan (QS. An-Nisa: 11), dan 3) Ibu mendapat 1/6 jika ada anak atau cucu (QS. An-Nisa: 11). Pernyataan 2 salah karena suami mendapat 1/2 jika istri tidak meninggalkan anak atau cucu, dan 4 salah karena saudara laki-laki seibu mendapat 1/6 jika hanya satu orang."
                     },
-                    // Tambahkan soal-soal SMA/SMK lainnya di sini
+                    {
+                        question: "Dalam Islam, transaksi ekonomi yang dilarang adalah...",
+                        options: [
+                            "A. Jual beli dengan sistem tunai",
+                            "B. Kerjasama bagi hasil (mudharabah)",
+                            "C. Sewa menyewa dengan akad jelas",
+                            "D. Riba dalam pinjaman",
+                            "E. Jual beli dengan sistem kredit"
+                        ],
+                        correctAnswer: 3,
+                        explanation: "Riba dalam segala bentuknya dilarang dalam Islam (QS. Al-Baqarah: 275). Transaksi lain seperti jual beli tunai/kredit, mudharabah, dan sewa menyewa yang memenuhi syarat diperbolehkan dalam Islam."
+                    },
+                    {
+                        question: "Perhatikan pernyataan tentang khulafaur rasyidin: 1) Abu Bakar Ash-Shiddiq, 2) Umar bin Khattab, 3) Utsman bin Affan, 4) Ali bin Abi Thalib. Urutan yang benar masa kekhalifahan mereka adalah...",
+                        options: [
+                            "A. 1-2-3-4",
+                            "B. 1-3-2-4",
+                            "C. 2-1-3-4",
+                            "D. 2-3-1-4",
+                            "E. 3-1-2-4"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Urutan khulafaur rasyidin adalah: 1) Abu Bakar Ash-Shiddiq (11-13 H/632-634 M), 2) Umar bin Khattab (13-23 H/634-644 M), 3) Utsman bin Affan (23-35 H/644-656 M), 4) Ali bin Abi Thalib (35-40 H/656-661 M)."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk syarat sah shalat adalah...",
+                        options: [
+                            "A. Menutup aurat",
+                            "B. Menghadap kiblat",
+                            "C. Suci dari hadas kecil dan besar",
+                            "D. Masuk waktu shalat",
+                            "E. Semua jawaban benar"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Semua pilihan di atas termasuk syarat sah shalat. Syarat sah shalat lainnya: 1) Mengetahui tata caranya, 2) Suci badan, pakaian dan tempat dari najis, 3) Tidak ada yang membatalkan shalat."
+                    }
                 ]
             }
         };
@@ -1978,10 +2084,17 @@
             
             // Load questions based on level - hanya Agama Islam
             if (participantData.level && QUESTION_BANK[participantData.level]['Agama Islam']) {
-                questions = QUESTION_BANK[participantData.level]['Agama Islam'];
+                // Acak urutan soal
+                const originalQuestions = QUESTION_BANK[participantData.level]['Agama Islam'];
+                questions = shuffleArray(originalQuestions);
+                
+                // Simpan urutan soal yang diacak
+                questionOrder = questions.map((_, index) => index);
             } else {
-                // Default questions
-                questions = QUESTION_BANK['SD']['Agama Islam'];
+                // Default questions (SD)
+                const originalQuestions = QUESTION_BANK['SD']['Agama Islam'];
+                questions = shuffleArray(originalQuestions);
+                questionOrder = questions.map((_, index) => index);
             }
             
             // Initialize exam data
@@ -2013,6 +2126,16 @@
                 // Load first question
                 loadQuestion(0);
             }, 500);
+        }
+        
+        // Fungsi untuk mengacak array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
         }
         
         function startTimer() {
@@ -2083,8 +2206,9 @@
             currentQuestionIndex = index;
             const question = questions[index];
             
-            // Update question text
-            document.getElementById('question-text').textContent = `Soal ${index + 1}: ${question.question}`;
+            // Update question text (tampilkan nomor urut asli dari questionOrder)
+            const originalQuestionNumber = questionOrder[index] + 1;
+            document.getElementById('question-text').textContent = `Soal ${originalQuestionNumber}: ${question.question}`;
             
             // Clear previous image if exists
             const imageContainer = document.getElementById('question-image-container');
@@ -2399,6 +2523,8 @@
             if (code === adminSettings.adminCode) {
                 // Show admin panel content
                 document.getElementById('admin-panel-content').style.display = 'block';
+                // Load participants data
+                loadParticipantsData();
             } else {
                 alert('Kode admin salah. Silakan coba lagi.');
             }
