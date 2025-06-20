@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ujian Online Agama PERGUNU Situbondo</title>
+    <title>Ujian Online Agama Islam PERGUNU Situbondo</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
@@ -935,11 +935,11 @@
         <div id="welcome-screen" class="card slide-in">
             <div class="header">
                 <img src="https://raw.githubusercontent.com/pergunu/ujian-online/main/assets/images/logo.png" alt="PERGUNU Logo" class="logo">
-                <h1>Ujian Online Agama PERGUNU Situbondo</h1>
+                <h1>Ujian Online Agama Islam PERGUNU Situbondo</h1>
             </div>
             
             <div id="greeting-message">
-                <p id="greeting-text">Selamat datang di sistem ujian online agama PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</p>
+                <p id="greeting-text">Selamat datang di sistem ujian online Agama Islam PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</p>
             </div>
             
             <div class="form-group">
@@ -955,7 +955,7 @@
         <div id="terms-screen" class="card" style="display: none;">
             <h2>Peraturan dan Kebijakan Ujian Online</h2>
             <div class="terms-content" style="max-height: 300px; overflow-y: auto; margin: 20px 0; padding: 15px; background: rgba(0, 0, 0, 0.1); border-radius: 8px;">
-                <p>1. Ujian ini dikembangkan oleh Tim PERGUNU Situbondo.</p>
+                <p>1. Ujian ini dikembangkan oleh Cendhanu Tim Kreator PERGUNU Situbondo.</p>
                 <p>2. Peserta wajib mengisi data diri dengan benar dan lengkap.</p>
                 <p>3. Dilarang keras melakukan kecurangan selama ujian berlangsung.</p>
                 <p>4. Waktu ujian akan berjalan terus dan tidak dapat dihentikan.</p>
@@ -1048,8 +1048,8 @@
                 <div class="form-group">
                     <label class="form-label">Pilih Jenis Ujian</label>
                     <div class="radio-group">
-                        <input type="radio" id="subject-islam" name="subject" value="Agama Islam" class="radio-option" checked>
-                        <label for="subject-islam" class="radio-label">Agama Islam</label>
+                        <input type="radio" id="subject-religion" name="subject" value="Agama Islam" class="radio-option" checked>
+                        <label for="subject-religion" class="radio-label">Agama Islam</label>
                     </div>
                 </div>
             </div>
@@ -1198,7 +1198,7 @@
                         <h5>Pengaturan Konten</h5>
                         <div class="form-group">
                             <label class="form-label">Pesan Pembuka</label>
-                            <textarea id="greeting-message-input" class="form-control" rows="3" style="color: #333;">Selamat datang di sistem ujian online agama PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</textarea>
+                            <textarea id="greeting-message-input" class="form-control" rows="3" style="color: #333;">Selamat datang di sistem ujian online Agama Islam PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.</textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Pesan Informasi Berkala</label>
@@ -1273,10 +1273,10 @@
                             <label class="admin-control-label">Agama Islam</label>
                             <div class="admin-toggle">
                                 <label class="toggle-switch">
-                                    <input type="checkbox" id="toggle-islam" checked>
+                                    <input type="checkbox" id="toggle-religion" checked>
                                     <span class="toggle-slider"></span>
                                 </label>
-                                <span id="islam-status">Aktif</span>
+                                <span id="religion-status">Aktif</span>
                             </div>
                         </div>
                         <button id="save-settings-btn" class="btn btn-success">Simpan Pengaturan</button>
@@ -1421,93 +1421,109 @@
             examDuration: 120,
             questionCount: 20,
             randomizeQuestions: true,
-            greetingMessage: "Selamat datang di sistem ujian online agama PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
+            greetingMessage: "Selamat datang di sistem ujian online Agama Islam PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
             adminMessage: "Tidak ada informasi terbaru saat ini.",
             chairmanName: "Moh. Nuril Hudha, S.Pd., M.Si.",
             enabledSubjects: {
-                'Agama Islam': true
+                "Agama Islam": true
             }
         };
 
-        // Question bank structure with levels (Agama Islam)
+        // Question bank structure with levels (Agama Islam only)
         let QUESTION_BANK = {
             'SD': {
                 'Agama Islam': [
                     {
-                question: "Rukun Islam yang pertama adalah...",
-                options: [
-                    "A. Membaca dua kalimat syahadat",
-                    "B. Mendirikan shalat",
-                    "C. Berpuasa di bulan Ramadhan",
-                    "D. Menunaikan haji",
-                    "E. Membayar zakat"
-                ],
-                correctAnswer: 0,
-                explanation: "Rukun Islam yang pertama adalah membaca dua kalimat syahadat, yaitu bersaksi bahwa tidak ada Tuhan selain Allah dan Muhammad adalah utusan Allah."
+                        question: "Berikut ini yang termasuk rukun iman yang ke-3 adalah...",
+                        options: [
+                            "A. Iman kepada Allah",
+                            "B. Iman kepada Malaikat",
+                            "C. Iman kepada Kitab-kitab Allah",
+                            "D. Iman kepada Rasul Allah",
+                            "E. Iman kepada Hari Kiamat"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Rukun iman yang ke-3 adalah iman kepada Kitab-kitab Allah. Urutan rukun iman: 1) Iman kepada Allah, 2) Iman kepada Malaikat, 3) Iman kepada Kitab-kitab Allah, 4) Iman kepada Rasul Allah, 5) Iman kepada Hari Kiamat, 6) Iman kepada Qada dan Qadar."
+                    },
+                    {
+                        question: "Shalat wajib yang dilaksanakan pada malam hari adalah...",
+                        options: [
+                            "A. Shalat Subuh",
+                            "B. Shalat Dzuhur",
+                            "C. Shalat Ashar",
+                            "D. Shalat Maghrib",
+                            "E. Shalat Isya"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Shalat Isya adalah shalat wajib yang dilaksanakan pada malam hari setelah masuk waktu Isya hingga sebelum waktu Subuh. Shalat Maghrib dilaksanakan setelah matahari terbenam, tetapi masih termasuk waktu sore."
+                    }
+                ]
             },
-            {
-                question: "Berikut ini yang termasuk dalam Rukun Iman adalah...",
-                options: [
-                    "A. Iman kepada Allah",
-                    "B. Iman kepada kitab-kitab Allah",
-                    "C. Iman kepada hari akhir",
-                    "D. Iman kepada qada dan qadar",
-                    "E. Semua jawaban benar"
-                ],
-                correctAnswer: 4,
-                explanation: "Semua pilihan termasuk dalam Rukun Iman yang enam, yaitu iman kepada Allah, malaikat-malaikat-Nya, kitab-kitab-Nya, rasul-rasul-Nya, hari akhir, serta qada dan qadar."
-            },
-            {
-                question: "Nabi Muhammad SAW menerima wahyu pertama di...",
-                options: [
-                    "A. Masjidil Haram",
-                    "B. Gua Hira",
-                    "C. Jabal Uhud",
-                    "D. Padang Arafah",
-                    "E. Kota Madinah"
-                ],
-                correctAnswer: 1,
-                explanation: "Nabi Muhammad SAW menerima wahyu pertama di Gua Hira melalui Malaikat Jibril, yaitu surat Al-Alaq ayat 1-5."
-            }
+            'SMP': {
+                'Agama Islam': [
+                    {
+                        question: "Perhatikan pernyataan berikut tentang sifat wajib Allah: 1) Wujud, 2) Qidam, 3) Baqa', 4) Mukhalafatu lil hawaditsi. Yang termasuk sifat ma'ani adalah...",
+                        options: [
+                            "A. 1 dan 2",
+                            "B. 1 dan 3",
+                            "C. 2 dan 3",
+                            "D. 2 dan 4",
+                            "E. 3 dan 4"
+                        ],
+                        correctAnswer: 3,
+                        explanation: "Sifat ma'ani adalah sifat yang dapat digambarkan dengan akal. Dari pilihan di atas, Qidam (kekal tanpa permulaan) dan Baqa' (kekal tanpa akhir) termasuk sifat ma'ani. Wujud adalah sifat nafsiyah, sedangkan Mukhalafatu lil hawaditsi adalah sifat ma'nawiyah."
+                    },
+                    {
+                        question: "Perhatikan ayat Al-Qur'an berikut: 'Wa mā arsalnāka illā raḥmatan lil-'ālamīn' (QS. Al-Anbiya: 107). Makna dari ayat tersebut adalah...",
+                        options: [
+                            "A. Kami tidak mengutusmu kecuali sebagai rahmat bagi seluruh alam",
+                            "B. Kami tidak mengutusmu kecuali sebagai pemberi peringatan",
+                            "C. Kami tidak mengutusmu kecuali sebagai pembawa kabar gembira",
+                            "D. Kami tidak mengutusmu kecuali sebagai saksi atas umat manusia",
+                            "E. Kami tidak mengutusmu kecuali sebagai penutup para nabi"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Ayat tersebut berarti 'Dan tidaklah Kami mengutusmu (Muhammad) melainkan sebagai rahmat bagi seluruh alam' (QS. Al-Anbiya: 107). Ini menunjukkan bahwa Nabi Muhammad SAW diutus sebagai rahmat untuk semua makhluk, bukan hanya manusia tetapi juga jin dan alam semesta."
+                    }
                 ]
             },
             'SMA/SMK': {
                 'Agama Islam': [
                     {
-                question: "Menurut pendapat ulama yang kuat, makna 'Makkiyah' dan 'Madaniyah' dalam pembagian surat Al-Quran didasarkan pada...",
-                options: [
-                    "A. Tempat turunnya wahyu",
-                    "B. Waktu turunnya wahyu",
-                    "C. Sifat kandungan ayat",
-                    "D. Periode kehidupan Nabi",
-                    "E. Tempat pertama kali dibacakan"
-                ],
-                correctAnswer: 0,
-                explanation: "Makkiyah dan Madaniyah umumnya merujuk pada tempat turunnya wahyu, bukan waktu. Makkiyah turun di Mekah atau sebelum hijrah, Madaniyah turun di Madinah atau setelah hijrah."
-            },
-            {
-                question: "Hukum melaksanakan khutbah Jumat dengan bahasa selain Arab menurut pendapat yang rajih (kuat) adalah...",
-                options: [
-                    "A. Wajib menggunakan bahasa Arab",
-                    "B. Boleh dengan bahasa setempat",
-                    "C. Haram menggunakan selain Arab",
-                    "D. Makruh jika tidak menggunakan Arab",
-                    "E. Sah hanya jika jamaah tidak paham Arab"
-                ],
-                correctAnswer: 1,
-                explanation: "Menurut pendapat yang rajih, khutbah boleh dengan bahasa setempat asalkan memenuhi rukun-rukunnya, karena tujuan khutbah adalah nasihat yang bisa dipahami."
-            }
+                        question: "Perhatikan hadis berikut: 'Innamal a'mālu binniyyāt...' (HR. Bukhari-Muslim). Kandungan utama hadis tersebut adalah tentang...",
+                        options: [
+                            "A. Keutamaan niat dalam beramal",
+                            "B. Kewajiban ikhlas dalam beribadah",
+                            "C. Larangan riya' dalam beramal",
+                            "D. Pentingnya ilmu sebelum beramal",
+                            "E. Semua jawaban benar"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Hadis tentang niat ini mengandung semua poin yang disebutkan dalam pilihan jawaban. Niat adalah dasar diterimanya amal, harus ikhlas karena Allah, tidak boleh riya', dan ilmu tentang cara beramal yang benar harus didahulukan sebelum beramal."
+                    },
+                    {
+                        question: "Perhatikan pernyataan tentang hukum waris Islam: 1) Anak laki-laki mendapat bagian lebih besar dari anak perempuan, 2) Suami mendapat 1/2 jika istri tidak meninggalkan anak, 3) Ibu mendapat 1/6 jika ada anak atau cucu, 4) Saudara laki-laki seibu mendapat 1/6. Pernyataan yang benar adalah...",
+                        options: [
+                            "A. 1 dan 2",
+                            "B. 1 dan 3",
+                            "C. 2 dan 3",
+                            "D. 2 dan 4",
+                            "E. 3 dan 4"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Pernyataan yang benar adalah 1) Anak laki-laki mendapat bagian 2x anak perempuan (QS. An-Nisa: 11), dan 3) Ibu mendapat 1/6 jika ada anak atau cucu (QS. An-Nisa: 11). Pernyataan 2 salah karena suami mendapat 1/2 jika istri tidak meninggalkan anak atau cucu, dan 4 salah karena saudara laki-laki seibu mendapat 1/6 jika hanya satu orang."
+                    }
                 ]
             }
         };
 
         // Motivational messages based on score
         const MOTIVATIONAL_MESSAGES = {
-            '90-100': 'Sempurna! Pemahaman agama Anda sangat baik. Pertahankan dan terus tingkatkan ilmu agama.',
-            '80-89': 'Hasil yang sangat baik! Anda telah menunjukkan pemahaman yang mendalam tentang agama.',
-            '70-79': 'Kerja bagus! Anda memiliki dasar pengetahuan agama yang kuat.',
-            '60-69': 'Hasil yang cukup baik. Tingkatkan lagi pemahaman agama Anda dengan belajar lebih giat.',
-            '50-59': 'Anda sudah memahami dasar-dasarnya. Teruslah belajar dan mendalami agama.',
+            '90-100': 'Sempurna! Anda sangat luar biasa dalam menguasai materi agama Islam. Pertahankan prestasi ini.',
+            '80-89': 'Hasil yang sangat baik! Anda telah menunjukkan pemahaman yang mendalam tentang agama Islam.',
+            '70-79': 'Kerja bagus! Anda memiliki pemahaman yang baik tentang materi agama Islam ini.',
+            '60-69': 'Hasil yang cukup baik. Tingkatkan lagi pemahaman Anda untuk hasil yang lebih baik.',
+            '50-59': 'Anda sudah memahami dasar-dasarnya. Terus berlatih untuk meningkatkan pemahaman agama.',
             '0-49': 'Jangan menyerah! Gunakan hasil ini sebagai motivasi untuk belajar agama lebih giat lagi.'
         };
         
@@ -1831,8 +1847,8 @@
             document.getElementById('chairman-name').value = adminSettings.chairmanName;
             
             // Load subject toggle
-            document.getElementById('toggle-islam').checked = adminSettings.enabledSubjects['Agama Islam'];
-            document.getElementById('islam-status').textContent = adminSettings.enabledSubjects['Agama Islam'] ? 'Aktif' : 'Nonaktif';
+            document.getElementById('toggle-religion').checked = adminSettings.enabledSubjects["Agama Islam"];
+            document.getElementById('religion-status').textContent = adminSettings.enabledSubjects["Agama Islam"] ? 'Aktif' : 'Nonaktif';
         }
         
         function saveParticipantsData() {
@@ -2321,11 +2337,11 @@
                     <h2 class="certificate-recipient">${formatName(participantData.fullname)}</h2>
                     <p class="certificate-body">
                         Atas Partisipasi & Pencapaian Luar Biasa Dalam<br>
-                        Ujian Agama Pergunu Situbondo
+                        Ujian Agama Islam Pergunu Situbondo
                     </p>
                     <p class="certificate-body">
-                        Sebagai penghargaan atas dedikasi dalam memahami materi agama dan meningkatkan keimanan, 
-                        sertifikat ini diberikan sebagai motivasi untuk terus mendalami ilmu agama.
+                        Sebagai penghargaan atas dedikasi dalam memahami materi agama Islam dan meningkatkan keimanan, 
+                        sertifikat ini diberikan sebagai motivasi untuk terus berkembang dalam ilmu agama.
                     </p>
                     <div class="certificate-score">Nilai: ${score}%</div>
                     <p class="certificate-motivation">${motivation}</p>
@@ -2816,7 +2832,7 @@
             
             // Update subject toggle
             adminSettings.enabledSubjects = {
-                'Agama Islam': document.getElementById('toggle-islam').checked
+                "Agama Islam": document.getElementById('toggle-religion').checked
             };
             
             // Save to localStorage
