@@ -1167,30 +1167,6 @@
                                 <label class="admin-control-label">Durasi Ujian (menit)</label>
                                 <input type="number" id="exam-duration" class="admin-control-input" value="120" min="5" max="300">
                             </div>
-                            <div class="admin-control-group">
-                                <label class="admin-control-label">Jumlah Soal</label>
-                                <select id="question-count" class="admin-control-input">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                    <option value="25">25</option>
-                                    <option value="30">30</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                    <option value="150">150</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="admin-control-group">
-                            <label class="admin-control-label">Acak Soal</label>
-                            <div class="admin-toggle">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="randomize-questions" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                                <span id="randomize-status">Aktif</span>
-                            </div>
                         </div>
                     </div>
                     
@@ -1419,8 +1395,6 @@
             loginCode: DEFAULT_LOGIN_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
             examDuration: 120,
-            questionCount: 20,
-            randomizeQuestions: true,
             greetingMessage: "Selamat datang di sistem ujian online Agama Islam PERGUNU Situbondo. Silakan masukkan kode login untuk melanjutkan.",
             adminMessage: "Tidak ada informasi terbaru saat ini.",
             chairmanName: "Moh. Nuril Hudha, S.Pd., M.Si.",
@@ -1430,6 +1404,7 @@
         };
 
         // Question bank structure with levels (Agama Islam only)
+        // Dapat diubah secara manual di sini
         let QUESTION_BANK = {
             'SD': {
                 'Agama Islam': [
@@ -1456,7 +1431,8 @@
                         ],
                         correctAnswer: 4,
                         explanation: "Shalat Isya adalah shalat wajib yang dilaksanakan pada malam hari setelah masuk waktu Isya hingga sebelum waktu Subuh. Shalat Maghrib dilaksanakan setelah matahari terbenam, tetapi masih termasuk waktu sore."
-                    }
+                    },
+                    // Tambahkan soal-soal SD lainnya di sini
                 ]
             },
             'SMP': {
@@ -1470,7 +1446,7 @@
                             "D. 2 dan 4",
                             "E. 3 dan 4"
                         ],
-                        correctAnswer: 3,
+                        correctAnswer: 2,
                         explanation: "Sifat ma'ani adalah sifat yang dapat digambarkan dengan akal. Dari pilihan di atas, Qidam (kekal tanpa permulaan) dan Baqa' (kekal tanpa akhir) termasuk sifat ma'ani. Wujud adalah sifat nafsiyah, sedangkan Mukhalafatu lil hawaditsi adalah sifat ma'nawiyah."
                     },
                     {
@@ -1484,7 +1460,8 @@
                         ],
                         correctAnswer: 0,
                         explanation: "Ayat tersebut berarti 'Dan tidaklah Kami mengutusmu (Muhammad) melainkan sebagai rahmat bagi seluruh alam' (QS. Al-Anbiya: 107). Ini menunjukkan bahwa Nabi Muhammad SAW diutus sebagai rahmat untuk semua makhluk, bukan hanya manusia tetapi juga jin dan alam semesta."
-                    }
+                    },
+                    // Tambahkan soal-soal SMP lainnya di sini
                 ]
             },
             'SMA/SMK': {
@@ -1510,9 +1487,10 @@
                             "D. 2 dan 4",
                             "E. 3 dan 4"
                         ],
-                        correctAnswer: 2,
+                        correctAnswer: 1,
                         explanation: "Pernyataan yang benar adalah 1) Anak laki-laki mendapat bagian 2x anak perempuan (QS. An-Nisa: 11), dan 3) Ibu mendapat 1/6 jika ada anak atau cucu (QS. An-Nisa: 11). Pernyataan 2 salah karena suami mendapat 1/2 jika istri tidak meninggalkan anak atau cucu, dan 4 salah karena saudara laki-laki seibu mendapat 1/6 jika hanya satu orang."
-                    }
+                    },
+                    // Tambahkan soal-soal SMA/SMK lainnya di sini
                 ]
             }
         };
@@ -1816,9 +1794,6 @@
                 radio.addEventListener('change', showEditGradeSelection);
             });
             
-            // Load participants data for admin panel
-            loadParticipantsData();
-            
             // Auto uppercase for edit fullname field
             document.getElementById('edit-fullname').addEventListener('input', function() {
                 this.value = this.value.toUpperCase();
@@ -1829,13 +1804,6 @@
         function loadAdminSettings() {
             // Load exam duration
             document.getElementById('exam-duration').value = adminSettings.examDuration;
-            
-            // Load question count
-            document.getElementById('question-count').value = adminSettings.questionCount;
-            
-            // Load randomize questions setting
-            document.getElementById('randomize-questions').checked = adminSettings.randomizeQuestions;
-            document.getElementById('randomize-status').textContent = adminSettings.randomizeQuestions ? 'Aktif' : 'Nonaktif';
             
             // Load greeting message
             document.getElementById('greeting-message-input').value = adminSettings.greetingMessage;
@@ -2016,13 +1984,6 @@
                 questions = QUESTION_BANK['SD']['Agama Islam'];
             }
             
-            // Randomize questions if setting is enabled
-            if (adminSettings.randomizeQuestions) {
-                questions = shuffleArray(questions).slice(0, adminSettings.questionCount);
-            } else {
-                questions = questions.slice(0, adminSettings.questionCount);
-            }
-            
             // Initialize exam data
             examData = {
                 startTime: new Date(),
@@ -2052,15 +2013,6 @@
                 // Load first question
                 loadQuestion(0);
             }, 500);
-        }
-        
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
         }
         
         function startTimer() {
@@ -2822,13 +2774,9 @@
         
         function saveSettings() {
             const examDuration = parseInt(document.getElementById('exam-duration').value);
-            const questionCount = parseInt(document.getElementById('question-count').value);
-            const randomizeQuestions = document.getElementById('randomize-questions').checked;
             
             // Update admin settings
             adminSettings.examDuration = examDuration;
-            adminSettings.questionCount = questionCount;
-            adminSettings.randomizeQuestions = randomizeQuestions;
             
             // Update subject toggle
             adminSettings.enabledSubjects = {
