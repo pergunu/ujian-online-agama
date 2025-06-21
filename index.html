@@ -191,6 +191,24 @@
             box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
         }
 
+        /* Custom Checkbox for Terms */
+        .terms-checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .terms-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            accent-color: var(--color-secondary);
+        }
+        
+        .terms-text {
+            font-size: 14px;
+        }
+
         /* Animation Classes */
         .slide-in {
             animation: slideIn 0.5s forwards;
@@ -966,9 +984,9 @@
                 <p>9. Keputusan panitia ujian bersifat mutlak dan tidak dapat diganggu gugat.</p>
             </div>
             
-            <div class="form-group">
-                <input type="checkbox" id="agree-terms" class="checkbox-option">
-                <label for="agree-terms" class="checkbox-label">Saya menyetujui</label>
+            <div class="terms-checkbox-container">
+                <input type="checkbox" id="agree-terms" class="terms-checkbox" required>
+                <span class="terms-text">Saya telah membaca dan menyetujui peraturan di atas</span>
             </div>
             
             <button id="continue-btn" class="btn" disabled>Lanjut Ikut Ujian</button>
@@ -1404,1113 +1422,379 @@
             }
         };
 
-        // Question bank structure with levels (Agama Islam only)
-        // Dapat diubah secara manual di sini
+        // Expanded Question bank with more questions (Agama Islam only)
+        // Anda bisa menambahkan soal sebanyak yang dibutuhkan di sini
         let QUESTION_BANK = {
             'SD': {
                 'Agama Islam': [
                     {
-                question: "Surah Al-Fatihah disebut juga sebagai Ummul Kitab. Jelaskan makna dari Ummul Kitab dan mengapa surah ini sangat penting dalam shalat!",
-                options: [
-                    "A. Ummul Kitab berarti 'induknya Al-Quran' karena mengandung inti ajaran Islam dan dibaca setiap rakaat shalat.",
-                    "B. Ummul Kitab berarti 'surah terpanjang' karena mencakup semua hukum Islam.",
-                    "C. Ummul Kitab adalah surah pertama yang diturunkan kepada Nabi Muhammad SAW.",
-                    "D. Ummul Kitab adalah surah yang hanya dibaca pada shalat Jumat.",
-                    "E. Ummul Kitab berarti 'penutup Al-Quran' karena selalu dibaca di akhir shalat."
-                ],
-                correctAnswer: 0,
-                explanation: "Ummul Kitab berarti 'induknya Al-Quran' karena surah Al-Fatihah mengandung inti ajaran Islam seperti tauhid, ibadah, dan penghambaan kepada Allah. Surah ini sangat penting dalam shalat karena merupakan rukun shalat yang harus dibaca setiap rakaat."
-            },
-            {
-                question: "Jelaskan perbedaan antara malaikat, jin, dan manusia berdasarkan sifat dan tugasnya menurut ajaran Islam!",
-                options: [
-                    "A. Malaikat diciptakan dari cahaya, selalu taat; jin dari api, bisa taat atau durhaka; manusia dari tanah, memiliki akal dan pilihan.",
-                    "B. Malaikat, jin, dan manusia sama-sama diciptakan dari tanah dan memiliki akal.",
-                    "C. Malaikat dan jin diciptakan dari api, sedangkan manusia dari cahaya.",
-                    "D. Malaikat bisa durhaka, jin selalu taat, dan manusia tidak memiliki akal.",
-                    "E. Malaikat dan manusia diciptakan untuk hidup abadi, sedangkan jin akan mati."
-                ],
-                correctAnswer: 0,
-                explanation: "Malaikat diciptakan dari cahaya, selalu taat kepada Allah tanpa memiliki nafsu. Jin diciptakan dari api, memiliki nafsu, dan bisa memilih taat atau durhaka. Manusia diciptakan dari tanah, diberi akal dan nafsu, serta memiliki kebebasan memilih antara baik dan buruk."
-            },
-            {
-                question: "Mengapa Nabi Muhammad SAW disebut sebagai khatamul anbiya? Jelaskan dengan menyebutkan dalil dari Al-Quran!",
-                options: [
-                    "A. Karena beliau adalah penutup para nabi dan rasul, sebagaimana firman Allah dalam QS. Al-Ahzab: 40.",
-                    "B. Karena beliau adalah nabi pertama yang diutus ke muka bumi.",
-                    "C. Karena beliau memiliki mukjizat terbanyak dibanding nabi lainnya.",
-                    "D. Karena beliau diutus khusus untuk bangsa Arab saja.",
-                    "E. Karena beliau adalah nabi yang akan datang setelah Nabi Isa AS."
-                ],
-                correctAnswer: 0,
-                explanation: "Nabi Muhammad SAW disebut khatamul anbiya (penutup para nabi) karena tidak akan ada nabi setelahnya, sebagaimana firman Allah dalam QS. Al-Ahzab: 40: 'Muhammad itu sekali-kali bukanlah bapak dari seorang laki-laki di antara kamu, tetapi dia adalah Rasulullah dan penutup nabi-nabi.'"
-            },
-            {
-                question: "Jelaskan makna dari Asmaul Husna 'Al-Adl' dan berikan contoh penerapannya dalam kehidupan sehari-hari!",
-                options: [
-                    "A. Al-Adl berarti Maha Adil, contohnya bersikap fair dalam menghakimi suatu perkara tanpa pilih kasih.",
-                    "B. Al-Adl berarti Maha Pengampun, contohnya memaafkan kesalahan orang lain.",
-                    "C. Al-Adl berarti Maha Kaya, contohnya memberi sedekah kepada fakir miskin.",
-                    "D. Al-Adl berarti Maha Mengetahui, contohnya belajar dengan giat.",
-                    "E. Al-Adl berarti Maha Penyayang, contohnya menyayangi hewan."
-                ],
-                correctAnswer: 0,
-                explanation: "Asmaul Husna Al-Adl berarti Yang Maha Adil. Contoh penerapannya adalah bersikap adil dalam memutuskan perkara, tidak memihak kepada siapapun meskipun terhadap keluarga sendiri, serta memberikan hak kepada yang berhak menerimanya."
-            },
-            {
-                question: "Apa yang dimaksud dengan hari akhir menurut ajaran Islam? Jelaskan pula mengapa iman kepada hari akhir termasuk rukun iman!",
-                options: [
-                    "A. Hari akhir adalah hari kiamat ketika alam semesta hancur dan manusia dibangkitkan untuk mempertanggungjawabkan amalnya. Termasuk rukun iman karena merupakan keyakinan dasar Islam.",
-                    "B. Hari akhir adalah hari ketika Nabi Isa AS turun ke bumi.",
-                    "C. Hari akhir adalah hari ketika semua manusia masuk surga.",
-                    "D. Hari akhir adalah hari ketika malaikat Israfil meniup sangkakala pertama kali.",
-                    "E. Hari akhir adalah hari ketika semua amal manusia diampuni."
-                ],
-                correctAnswer: 0,
-                explanation: "Hari akhir adalah hari kiamat ketika seluruh alam semesta hancur dan manusia dibangkitkan dari kubur untuk dihisab amal perbuatannya. Iman kepada hari akhir termasuk rukun iman karena merupakan keyakinan dasar dalam Islam yang mempengaruhi perilaku manusia untuk selalu berbuat baik."
-            },
-            {
-                question: "Jelaskan perbedaan antara zakat fitrah dan zakat mal dari segi waktu, kadar, dan penerimanya!",
-                options: [
-                    "A. Zakat fitrah wajib di bulan Ramadan dengan kadar beras 2.5 kg/orang untuk fakir miskin. Zakat mal dikeluarkan saat harta mencapai nisab setelah haul untuk 8 asnaf.",
-                    "B. Zakat fitrah dan zakat mal sama dalam semua hal kecuali waktunya.",
-                    "C. Zakat fitrah untuk orang kaya, zakat mal untuk orang miskin.",
-                    "D. Zakat fitrah dikeluarkan setahun sekali, zakat mal setiap bulan.",
-                    "E. Zakat fitrah berupa uang, zakat mal berupa makanan."
-                ],
-                correctAnswer: 0,
-                explanation: "Zakat fitrah wajib dikeluarkan di bulan Ramadan sebelum shalat Id dengan kadar 2.5 kg beras/orang untuk fakir miskin. Zakat mal dikeluarkan ketika harta mencapai nisab dan telah dimiliki selama satu tahun (haul) untuk 8 golongan (asnaf) penerima zakat."
-            },
-            {
-                question: "Apa hukumnya shalat Jumat bagi laki-laki muslim? Jelaskan syarat-syarat sah shalat Jumat menurut madzhab Syafi'i!",
-                options: [
-                    "A. Wajib bagi laki-laki muslim yang memenuhi syarat. Syarat sahnya: dilakukan berjamaah, minimal 40 orang, waktu zuhur, di tempat tetap, dan dua khutbah.",
-                    "B. Sunnah muakkad bagi semua muslim tanpa syarat.",
-                    "C. Wajib bagi perempuan dan laki-laki dengan syarat sama.",
-                    "D. Hanya wajib bagi ulama dan imam masjid.",
-                    "E. Tidak ada syarat khusus untuk shalat Jumat."
-                ],
-                correctAnswer: 0,
-                explanation: "Shalat Jumat hukumnya wajib bagi laki-laki muslim yang memenuhi syarat. Menurut madzhab Syafi'i, syarat sah shalat Jumat adalah: (1) dilakukan berjamaah, (2) minimal 40 orang laki-laki dewasa, (3) dilaksanakan pada waktu zuhur, (4) di tempat yang tetap, dan (5) didahului dua khutbah."
-            },
-            {
-                question: "Jelaskan pengertian jihad menurut Islam dan sebutkan 3 bentuk jihad yang bisa dilakukan seorang pelajar!",
-                options: [
-                    "A. Jihad adalah bersungguh-sungguh di jalan Allah. Contoh untuk pelajar: belajar giat, menghormati orang tua, dan berdakwah dengan sopan.",
-                    "B. Jihad hanya berarti perang melawan orang kafir.",
-                    "C. Jihad adalah ibadah khusus untuk orang dewasa saja.",
-                    "D. Jihad tidak ada kaitannya dengan kehidupan pelajar.",
-                    "E. Jihad hanya dilakukan dengan mengangkat senjata."
-                ],
-                correctAnswer: 0,
-                explanation: "Jihad secara bahasa berarti bersungguh-sungguh. Dalam Islam, jihad adalah mengerahkan seluruh kemampuan di jalan Allah. Bagi pelajar, jihad bisa dilakukan dengan: (1) belajar giat untuk bekal masa depan, (2) berbakti kepada orang tua, dan (3) menyampaikan kebenaran dengan cara yang baik."
-            },
-            {
-                question: "Apa yang dimaksud dengan ilmu tajwid? Jelaskan pentingnya mempelajari tajwid dalam membaca Al-Quran!",
-                options: [
-                    "A. Ilmu tentang cara membaca Al-Quran dengan benar. Penting untuk menjaga keaslian bacaan dan maknanya.",
-                    "B. Ilmu tentang terjemahan Al-Quran ke bahasa lain.",
-                    "C. Ilmu tentang sejarah turunnya Al-Quran.",
-                    "D. Ilmu tentang menghafal Al-Quran dengan cepat.",
-                    "E. Ilmu tentang tafsir ayat-ayat Al-Quran."
-                ],
-                correctAnswer: 0,
-                explanation: "Ilmu tajwid adalah ilmu yang mempelajari cara membaca Al-Quran dengan benar, termasuk makhraj huruf, sifat huruf, dan hukum bacaan. Mempelajari tajwid sangat penting untuk menjaga keaslian bacaan Al-Quran dan menghindari kesalahan yang bisa mengubah makna."
-            },
-            {
-                question: "Jelaskan perbedaan antara nabi dan rasul menurut aqidah Islam! Berikan contoh masing-masing 2 nama!",
-                options: [
-                    "A. Nabi menerima wahyu untuk dirinya, rasul mendapat wahyu untuk disampaikan. Contoh nabi: Yusuf, Harun. Contoh rasul: Nuh, Muhammad.",
-                    "B. Nabi dan rasul sama saja, hanya istilah yang berbeda.",
-                    "C. Nabi diutus untuk kaum tertentu, rasul untuk semua manusia.",
-                    "D. Nabi memiliki kitab, rasul tidak memiliki kitab.",
-                    "E. Nabi jumlahnya lebih sedikit dari rasul."
-                ],
-                correctAnswer: 0,
-                explanation: "Perbedaan nabi dan rasul: (1) Nabi menerima wahyu untuk diamalkan sendiri, sedangkan rasul wajib menyampaikan kepada umat. (2) Setiap rasul pasti nabi, tetapi tidak sebaliknya. Contoh nabi: Nabi Yusuf AS, Nabi Harun AS. Contoh rasul: Nabi Nuh AS, Nabi Muhammad SAW."
-            },
-            {
-                question: "Apa yang dimaksud dengan puasa sunnah Senin-Kamis? Jelaskan keutamaan dan hikmah melaksanakannya!",
-                options: [
-                    "A. Puasa di hari Senin dan Kamis yang dianjurkan Nabi. Keutamaannya: amal diperlihatkan kepada Allah, hikmahnya melatih kedisiplinan dan kesehatan.",
-                    "B. Puasa wajib bagi umat Islam setiap minggu.",
-                    "C. Puasa khusus untuk bulan Ramadan saja.",
-                    "D. Puasa yang hanya dilakukan oleh para nabi.",
-                    "E. Puasa untuk menebus dosa-dosa besar."
-                ],
-                correctAnswer: 0,
-                explanation: "Puasa sunnah Senin-Kamis adalah puasa yang sangat dianjurkan Nabi Muhammad SAW. Keutamaannya: hari Senin adalah hari kelahiran Nabi dan turunnya Al-Quran, sedangkan amal manusia diperlihatkan kepada Allah setiap Senin dan Kamis. Hikmahnya: melatih kedisiplinan, menjaga kesehatan, dan mendekatkan diri kepada Allah."
-            },
-            {
-                question: "Jelaskan makna dari syahadatain dan rukun-rukunnya! Mengapa syahadat disebut sebagai pondasi Islam?",
-                options: [
-                    "A. Syahadatain adalah dua kalimat syahadat. Rukunnya: mengucapkan dengan lisan, meyakini dengan hati, dan mengamalkan. Pondasi Islam karena menjadi pembeda antara muslim dan kafir.",
-                    "B. Syahadatain adalah pernyataan masuk Islam tanpa syarat.",
-                    "C. Syahadatain hanya diucapkan saat shalat saja.",
-                    "D. Syahadatain tidak memiliki rukun khusus.",
-                    "E. Syahadatain hanya wajib bagi orang yang baru masuk Islam."
-                ],
-                correctAnswer: 0,
-                explanation: "Syahadatain terdiri dari syahadat tauhid (asyhadu alla ilaha illallah) dan syahadat rasul (wa asyhadu anna muhammadar rasulullah). Rukunnya: (1) mengucapkan dengan lisan, (2) meyakini dengan hati, dan (3) mengamalkan konsekuensinya. Syahadat disebut pondasi Islam karena merupakan inti dari semua ajaran Islam dan pembeda antara muslim dan kafir."
-            },
-            {
-                question: "Apa hukumnya memakan makanan yang diharamkan dalam Islam? Jelaskan dampak negatifnya terhadap kehidupan manusia!",
-                options: [
-                    "A. Haram dan berdosa. Dampak negatif: merusak kesehatan, menjauhkan dari rahmat Allah, dan merusak akhlak.",
-                    "B. Makruh jika sedikit dimakan.",
-                    "C. Boleh dalam keadaan darurat.",
-                    "D. Hukumnya sunnah untuk dicicipi.",
-                    "E. Tidak ada dampak negatif selama enak rasanya."
-                ],
-                correctAnswer: 0,
-                explanation: "Memakan makanan haram hukumnya haram dan termasuk dosa besar. Dampak negatifnya: (1) merusak kesehatan jasmani, (2) doa sulit dikabulkan, (3) menjauhkan dari rahmat Allah, (4) merusak akhlak, dan (5) membuat hati keras dan sulit menerima kebenaran."
-            },
-            {
-                question: "Jelaskan pengertian akhlak mahmudah dan akhlak madzmumah beserta masing-masing 3 contohnya!",
-                options: [
-                    "A. Akhlak mahmudah adalah perilaku terpuji (jujur, sabar, rendah hati). Madzmumah adalah tercela (dengki, sombong, bohong).",
-                    "B. Akhlak mahmudah dan madzmumah sama saja.",
-                    "C. Akhlak mahmudah hanya untuk nabi, madzmumah untuk orang biasa.",
-                    "D. Akhlak mahmudah adalah yang disukai manusia, madzmumah yang tidak disukai.",
-                    "E. Tidak ada contoh pasti untuk kedua akhlak tersebut."
-                ],
-                correctAnswer: 0,
-                explanation: "Akhlak mahmudah adalah perilaku terpuji yang dicontohkan Nabi Muhammad SAW, contohnya: jujur, sabar, rendah hati, dermawan, dan pemaaf. Akhlak madzmumah adalah perilaku tercela yang harus dihindari, contohnya: dengki, sombong, bohong, fitnah, dan kasar."
-            },
-            {
-                question: "Mengapa Al-Quran disebut sebagai mukjizat terbesar Nabi Muhammad SAW? Jelaskan dengan menyebutkan bukti-buktinya!",
-                options: [
-                    "A. Karena keindahan bahasanya, kebenaran isinya yang tak terbantahkan, dan terjaga keasliannya hingga akhir zaman.",
-                    "B. Karena Al-Quran diturunkan secara sekaligus.",
-                    "C. Karena Al-Quran berisi cerita-cerita menarik.",
-                    "D. Karena Al-Quran mudah dihafal oleh anak kecil.",
-                    "E. Karena Al-Quran memiliki jumlah surah terbanyak."
-                ],
-                correctAnswer: 0,
-                explanation: "Al-Quran disebut mukjizat terbesar karena: (1) Keindahan sastra Arabnya yang tak tertandingi, (2) Kandungan ilmiahnya yang sesuai dengan sains modern, (3) Ramalan masa depan yang terbukti benar, (4) Terjaga keasliannya tanpa perubahan sejak diturunkan, dan (5) Mempengaruhi peradaban manusia."
-            },
-            {
-                question: "Apa yang dimaksud dengan khulafaur rasyidin? Sebutkan nama-nama mereka secara urut dan jelaskan jasa utama masing-masing!",
-                options: [
-                    "A. Empat khalifah pengganti Nabi yang mendapat petunjuk: Abu Bakar (memerangi nabi palsu), Umar (perluasan Islam), Utsman (pengumpulan Al-Quran), Ali (penegakan keadilan).",
-                    "B. Para sahabat Nabi yang ikut hijrah ke Madinah.",
-                    "C. Nama lain untuk para nabi sebelum Muhammad.",
-                    "D. Gelar untuk para ulama besar di masa kini.",
-                    "E. Para penjaga makam Nabi Muhammad SAW."
-                ],
-                correctAnswer: 0,
-                explanation: "Khulafaur Rasyidin adalah empat khalifah pengganti Nabi yang mendapat petunjuk: (1) Abu Bakar Ash-Shiddiq (memerangi nabi palsu dan pemurtadan), (2) Umar bin Khattab (perluasan wilayah Islam dan penataan administrasi), (3) Utsman bin Affan (pengumpulan Al-Quran dalam satu mushaf), (4) Ali bin Abi Thalib (penegakan keadilan di tengah fitnah)."
-            },
-            {
-                question: "Jelaskan pengertian qada dan qadar serta perbedaan keduanya! Berikan contoh dalam kehidupan sehari-hari!",
-                options: [
-                    "A. Qada adalah ketetapan Allah yang bersifat umum, qadar adalah ketetapan yang detail. Contoh: qada - ajal setiap makhluk, qadar - cara dan waktu kematian seseorang.",
-                    "B. Qada dan qadar adalah dua nama untuk konsep yang sama.",
-                    "C. Qada adalah takdir baik, qadar adalah takdir buruk.",
-                    "D. Qada bisa diubah manusia, qadar tidak bisa diubah.",
-                    "E. Qada untuk kehidupan dunia, qadar untuk akhirat."
-                ],
-                correctAnswer: 0,
-                explanation: "Qada adalah ketetapan Allah yang bersifat umum seperti adanya hidup dan mati, sedangkan qadar adalah ketetapan Allah yang detail seperti cara dan waktu kematian seseorang. Contoh: qada - setiap manusia akan mati (umum), qadar - seseorang meninggal karena sakit pada usia tertentu (spesifik)."
-            },
-            {
-                question: "Apa hukumnya mengingkari salah satu rukun iman? Jelaskan konsekuensinya menurut aqidah Islam!",
-                options: [
-                    "A. Kafir/murtad karena rukun iman adalah satu kesatuan. Konsekuensinya: tidak sah imannya dan terancam siksa neraka.",
-                    "B. Hanya berdosa kecil karena itu urusan pribadi.",
-                    "C. Tidak apa-apa selama masih percaya kepada Allah.",
-                    "D. Hukumnya makruh jika tidak diucapkan.",
-                    "E. Boleh asalkan masih melakukan shalat."
-                ],
-                correctAnswer: 0,
-                explanation: "Mengingkari salah satu rukun iman hukumnya kafir/murtad karena rukun iman adalah satu kesatuan yang tidak bisa dipisah. Konsekuensinya: (1) tidak sah imannya, (2) ibadahnya tidak diterima, (3) jika mati dalam keadaan demikian terancam siksa neraka, (4) di dunia bisa dihukumi sebagai murtad jika terang-terangan mengingkari."
-            },
-            {
-                question: "Jelaskan pengertian dan pentingnya amar ma'ruf nahi munkar dalam Islam! Berikan contoh penerapannya di lingkungan sekolah!",
-                options: [
-                    "A. Menyuruh kebaikan dan mencegah kemungkaran. Penting untuk menjaga kebaikan masyarakat. Contoh: mengajak teman shalat, melarang bullying.",
-                    "B. Amar ma'ruf berarti berbuat baik kepada teman, nahi munkar berarti tidak jahat.",
-                    "C. Hanya kewajiban ulama dan guru agama.",
-                    "D. Tidak perlu dilakukan di sekolah karena urusan pribadi.",
-                    "E. Sama dengan memberi nasihat biasa."
-                ],
-                correctAnswer: 0,
-                explanation: "Amar ma'ruf nahi munkar berarti menyuruh kepada kebaikan dan mencegah dari kemungkaran. Penting untuk: (1) menjaga masyarakat dari kerusakan, (2) melaksanakan kewajiban sebagai muslim, (3) mendapatkan rahmat Allah. Contoh di sekolah: mengajak teman shalat tepat waktu, melarang menyontek, mencegah perundungan, dan menegur yang merokok."
-            },
-            {
-                question: "Apa yang dimaksud dengan wudhu? Jelaskan syarat, rukun, dan hal-hal yang membatalkan wudhu!",
-                options: [
-                    "A. Bersuci untuk menghilangkan hadats kecil. Syarat: Islam, tamyiz, tidak haid. Rukun: niat, membasuh anggota wudhu. Batal: keluar sesuatu dari dua jalan, hilang akal, bersentuhan lawan jenis.",
-                    "B. Wudhu adalah mandi wajib setelah junub.",
-                    "C. Wudhu hanya diperlukan untuk shalat Jumat saja.",
-                    "D. Tidak ada syarat khusus untuk wudhu.",
-                    "E. Wudhu batal hanya jika buang air besar."
-                ],
-                correctAnswer: 0,
-                explanation: "Wudhu adalah bersuci dari hadats kecil dengan air. Syarat wudhu: (1) Islam, (2) tamyiz (mampu membedakan), (3) tidak berhadats besar, (4) menggunakan air suci. Rukun wudhu: (1) niat, (2) membasuh muka, (3) membasuh tangan sampai siku, (4) mengusap kepala, (5) membasuh kaki sampai mata kaki, (6) tertib. Pembatal wudhu: (1) keluar sesuatu dari qubul/dubur, (2) hilang akal, (3) bersentuhan kulit dengan lawan jenis yang bukan mahram, (4) menyentuh kemaluan dengan telapak tangan."
-            },
-            {
-                question: "Jelaskan perbedaan antara riba dan jual beli yang sah menurut Islam! Mengapa riba diharamkan?",
-                options: [
-                    "A. Riba adalah tambahan dalam pinjaman, jual beli sah ada pertukaran barang/jasa. Diharamkan karena zalim, merusak ekonomi, dan dosa besar.",
-                    "B. Riba dan jual beli sama saja dalam Islam.",
-                    "C. Riba hanya haram jika besar bunganya.",
-                    "D. Jual beli tidak disukai dalam Islam.",
-                    "E. Riba diperbolehkan dalam keadaan darurat."
-                ],
-                correctAnswer: 0,
-                explanation: "Perbedaan riba dan jual beli sah: (1) Riba adalah tambahan yang dipersyaratkan dalam pinjaman, sedangkan jual beli ada pertukaran barang/jasa yang jelas. (2) Riba bersifat eksploitatif, jual beli suka sama suka. Riba diharamkan karena: (1) zalim kepada pihak lemah, (2) merusak sistem ekonomi, (3) termasuk dosa besar, (4) menghilangkan keberkahan harta, dan (5) diancam perang oleh Allah (QS. Al-Baqarah: 279)."
-            },
-            {
-                question: "Apa yang dimaksud dengan sedekah jariyah? Berikan 5 contoh amal yang termasuk sedekah jariyah!",
-                options: [
-                    "A. Amal yang pahalanya terus mengalir meski pelaku telah wafat. Contoh: bangun masjid, mengajarkan ilmu, anak shaleh, sumur wakaf, menanam pohon.",
-                    "B. Sedekah yang diberikan setiap hari Jumat.",
-                    "C. Hanya wakaf tanah untuk kuburan.",
-                    "D. Sedekah khusus di bulan Ramadan.",
-                    "E. Memberi makan fakir miskin sekali saja."
-                ],
-                correctAnswer: 0,
-                explanation: "Sedekah jariyah adalah amal kebajikan yang pahalanya terus mengalir kepada pelakunya meski telah meninggal dunia. Contohnya: (1) membangun masjid/madrasah, (2) mengajarkan ilmu yang bermanfaat, (3) meninggalkan anak yang shaleh dan mendoakannya, (4) membuat sumur wakaf, (5) menanam pohon yang buahnya dimakan orang, (6) mencetak mushaf Al-Quran, (7) membangun jembatan untuk kepentingan umum."
-            },
-            {
-                question: "Jelaskan pengertian dan hukum shalat berjamaah dalam Islam! Apa keutamaan shalat berjamaah dibanding shalat sendirian?",
-                options: [
-                    "A. Shalat bersama dengan imam dan makmum. Hukumnya sunnah muakkad. Keutamaan: pahala 27 derajat, diampuni dosa, dijauhkan dari neraka.",
-                    "B. Wajib bagi laki-laki dan perempuan setiap waktu.",
-                    "C. Hanya sunnah biasa tanpa keutamaan khusus.",
-                    "D. Lebih utama shalat sendirian di rumah.",
-                    "E. Hukumnya makruh jika di masjid."
-                ],
-                correctAnswer: 0,
-                explanation: "Shalat berjamaah adalah shalat yang dilakukan bersama-sama dengan seorang imam dan diikuti oleh makmum. Hukumnya sunnah muakkad (sangat dianjurkan) bagi laki-laki. Keutamaannya: (1) pahala 27 kali lipat dibanding shalat sendirian (HR. Bukhari-Muslim), (2) diampuni dosa-dosa (HR. Abu Dawud), (3) dijauhkan dari sifat munafik dan siksa neraka, (4) mempererat ukhuwah islamiyah."
-            },
-            {
-                question: "Apa yang dimaksud dengan hijrah dalam Islam? Jelaskan bentuk hijrah yang bisa dilakukan seorang muslim di zaman modern!",
-                options: [
-                    "A. Berpindah dari keburukan kepada kebaikan. Bentuk modern: hijrah akidah (tinggalkan syirik), hijrah akhlak (tinggalkan maksiat), hijrah gaya hidup (ikuti sunnah).",
-                    "B. Hanya berarti pindah tempat seperti Nabi dari Mekah ke Madinah.",
-                    "C. Hijrah tidak relevan lagi di zaman sekarang.",
-                    "D. Hanya untuk orang yang baru masuk Islam.",
-                    "E. Berpindah dari desa ke kota untuk mencari ilmu."
-                ],
-                correctAnswer: 0,
-                explanation: "Hijrah dalam Islam tidak hanya berarti berpindah tempat secara fisik, tetapi lebih luas yaitu berpindah dari keburukan kepada kebaikan. Bentuk hijrah modern: (1) Hijrah akidah - meninggalkan kesyirikan dan khurafat, (2) Hijrah ibadah - konsisten dalam shalat dan sunnah, (3) Hijrah akhlak - meninggalkan maksiat dan pergaulan buruk, (4) Hijrah gaya hidup - meninggalkan yang haram dan mengikuti sunnah Nabi."
-            },
-            {
-                question: "Jelaskan pengertian dan kriteria makanan halal menurut Islam! Berikan contoh makanan yang halal tetapi tidak thayyib (baik)!",
-                options: [
-                    "A. Halal: diperbolehkan syariat. Kriteria: tidak haram, disembelih dengan benar, tidak najis. Contoh tidak thayyib: makanan berlebihan, tidak sehat, atau merusak tubuh.",
-                    "B. Semua makanan halal pasti thayyib.",
-                    "C. Makanan halal hanya yang disebutkan dalam Al-Quran.",
-                    "D. Makanan halal harus berasal dari Arab.",
-                    "E. Tidak ada makanan halal yang tidak thayyib."
-                ],
-                correctAnswer: 0,
-                explanation: "Makanan halal adalah yang diperbolehkan menurut syariat Islam dengan kriteria: (1) bukan yang diharamkan (babi, bangkai, dll), (2) disembelih dengan menyebut nama Allah (khusus daging), (3) tidak terkena najis. Contoh halal tapi tidak thayyib: (1) makanan berlebihan sampai mubazir, (2) mengandung bahan yang merusak kesehatan meski halal, (3) makanan yang menyebabkan penyakit jika dikonsumsi berlebihan."
-            },
-            {
-                question: "Apa yang dimaksud dengan istighfar? Jelaskan perbedaan antara istighfar dan taubat serta sebutkan adab-adab beristighfar!",
-                options: [
-                    "A. Istighfar memohon ampun dengan lisan, taubat lebih luas (menyesal, berhenti, bertekad tidak mengulang). Adab: ikhlas, menghadirkan hati, terus-menerus.",
-                    "B. Istighfar dan taubat sama saja.",
-                    "C. Istighfar hanya untuk dosa kecil, taubat untuk dosa besar.",
-                    "D. Tidak ada adab khusus dalam beristighfar.",
-                    "E. Istighfar cukup diucapkan sekali seumur hidup."
-                ],
-                correctAnswer: 0,
-                explanation: "Istighfar adalah memohon ampunan kepada Allah dengan mengucapkan seperti 'astaghfirullah'. Taubat lebih luas mencakup: (1) menyesali dosa, (2) berhenti dari maksiat, (3) bertekad tidak mengulang, (4) mengembalikan hak orang jika ada. Adab istighfar: (1) ikhlas karena Allah, (2) menghadirkan hati, (3) mengakui kesalahan, (4) dilakukan terus-menerus, (5) disertai perbaikan diri."
-            },
-            {
-                question: "Jelaskan pengertian dan hikmah dari ibadah kurban! Siapa saja yang wajib berkurban dan apa syarat-syarat hewan kurban?",
-                options: [
-                    "A. Menyembelih hewan tertentu di hari raya. Hikmah: mendekatkan diri kepada Allah, berbagi dengan fakir miskin. Wajib bagi muslim yang mampu. Syarat hewan: cukup umur, sehat, tidak cacat.",
-                    "B. Kurban hanya sunnah tanpa hikmah khusus.",
-                    "C. Hanya wajib untuk orang Arab.",
-                    "D. Hewan kurban boleh yang cacat asalkan gemuk.",
-                    "E. Kurban untuk menunjukkan kekayaan."
-                ],
-                correctAnswer: 0,
-                explanation: "Ibadah kurban adalah menyembelih hewan ternak tertentu (unta, sapi, kambing) pada hari raya Idul Adha dan hari tasyriq. Hikmahnya: (1) meneladani ketaatan Nabi Ibrahim AS, (2) mendekatkan diri kepada Allah, (3) berbagi dengan fakir miskin, (4) mensyukuri nikmat Allah. Wajib bagi muslim yang mampu (memiliki kelebihan harta). Syarat hewan: (1) cukup umur (kambing 1 tahun, sapi 2 tahun), (2) sehat tidak sakit, (3) tidak cacat (buta, pincang, sangat kurus), (4) milik sendiri."
-            },
-            {
-                question: "Apa hukumnya mengunjungi orang sakit dalam Islam? Jelaskan adab-adabnya dan keutamaannya berdasarkan hadis Nabi!",
-                options: [
-                    "A. Sunnah yang sangat dianjurkan. Adab: mendoakan, memberi semangat, tidak lama-lama. Keutamaan: didoakan malaikat, dipetik buah surga.",
-                    "B. Wajib bagi keluarga dekat saja.",
-                    "C. Makruh karena bisa mengganggu pasien.",
-                    "D. Hanya untuk pasien muslim.",
-                    "E. Tidak ada keutamaan khusus."
-                ],
-                correctAnswer: 0,
-                explanation: "Mengunjungi orang sakit hukumnya sunnah muakkad (sangat dianjurkan). Adabnya: (1) mendoakan kesembuhan, (2) memberi semangat dan hiburan, (3) tidak berlama-lama mengganggu, (4) menasihati untuk sabar, (5) boleh mengingatkan tentang kematian jika kondisinya parah. Keutamaannya: (1) didoakan oleh 70.000 malaikat (HR. Muslim), (2) dipetik buah-buahan surga (HR. Tirmidzi), (3) mendapatkan rahmat Allah, (4) diampuni dosa-dosa."
-            },
-            {
-                question: "Jelaskan pengertian dan kedudukan sunnah Nabi dalam Islam! Apa konsekuensi bagi muslim yang mengingkari sunnah?",
-                options: [
-                    "A. Sunnah adalah segala yang berasal dari Nabi (perkataan, perbuatan, persetujuan). Kedudukan: sumber hukum kedua setelah Al-Quran. Ingkar sunnah bisa sesat.",
-                    "B. Sunnah hanya untuk Nabi bukan umatnya.",
-                    "C. Sunnah tidak penting dalam beragama.",
-                    "D. Mengingkari sunnah hanya dosa kecil.",
-                    "E. Sunnah sama dengan budaya Arab."
-                ],
-                correctAnswer: 0,
-                explanation: "Sunnah Nabi adalah segala yang berasal dari Rasulullah SAW baik berupa perkataan (qauli), perbuatan (fi'li), maupun persetujuan (taqriri). Kedudukannya sebagai sumber hukum Islam kedua setelah Al-Quran. Konsekuensi mengingkari sunnah: (1) sesat karena menolak sumber agama, (2) ibadahnya tidak sah jika menolak sunnah yang wajib, (3) terancam tidak diakui sebagai muslim jika mengingkari sunnah mutawatir, (4) tertutup dari pemahaman agama yang benar."
-            },
-            {
-                question: "Apa yang dimaksud dengan ilmu faraid? Jelaskan pentingnya mempelajari ilmu waris dalam Islam!",
-                options: [
-                    "A. Ilmu tentang pembagian harta warisan. Penting: menjamin keadilan, menghindari sengketa, kewajiban agama, menjaga hak ahli waris.",
-                    "B. Ilmu tentang pernikahan dan perceraian.",
-                    "C. Hanya penting untuk para hakim pengadilan.",
-                    "D. Tidak relevan di zaman modern.",
-                    "E. Sama dengan hukum wasiat biasa."
-                ],
-                correctAnswer: 0,
-                explanation: "Ilmu faraid adalah ilmu yang mempelajari tentang ketentuan pembagian harta warisan menurut Islam. Pentingnya mempelajari: (1) menjamin pembagian yang adil sesuai ketetapan Allah, (2) menghindari sengketa keluarga, (3) termasuk kewajiban agama yang sering diabaikan, (4) menjaga hak masing-masing ahli waris terutama wanita dan anak yatim, (5) melaksanakan perintah Allah dalam QS. An-Nisa' yang detail membahas warisan."
-            }
+                        question: "Berikut ini yang termasuk rukun iman yang ke-3 adalah...",
+                        options: [
+                            "A. Iman kepada Allah",
+                            "B. Iman kepada Malaikat",
+                            "C. Iman kepada Kitab-kitab Allah",
+                            "D. Iman kepada Rasul Allah",
+                            "E. Iman kepada Hari Kiamat"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Rukun iman yang ke-3 adalah iman kepada Kitab-kitab Allah. Urutan rukun iman: 1) Iman kepada Allah, 2) Iman kepada Malaikat, 3) Iman kepada Kitab-kitab Allah, 4) Iman kepada Rasul Allah, 5) Iman kepada Hari Kiamat, 6) Iman kepada Qada dan Qadar."
+                    },
+                    {
+                        question: "Shalat wajib yang dilaksanakan pada malam hari adalah...",
+                        options: [
+                            "A. Shalat Subuh",
+                            "B. Shalat Dzuhur",
+                            "C. Shalat Ashar",
+                            "D. Shalat Maghrib",
+                            "E. Shalat Isya"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Shalat Isya adalah shalat wajib yang dilaksanakan pada malam hari setelah masuk waktu Isya hingga sebelum waktu Subuh. Shalat Maghrib dilaksanakan setelah matahari terbenam, tetapi masih termasuk waktu sore."
+                    },
+                    {
+                        question: "Nabi Muhammad SAW menerima wahyu pertama di...",
+                        options: [
+                            "A. Masjidil Haram",
+                            "B. Gua Hira",
+                            "C. Bukit Thursina",
+                            "D. Masjid Nabawi",
+                            "E. Padang Arafah"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Nabi Muhammad SAW menerima wahyu pertama di Gua Hira ketika beliau sedang berkhalwat. Wahyu pertama yang turun adalah surat Al-Alaq ayat 1-5."
+                    },
+                    {
+                        question: "Kitab suci yang diturunkan kepada Nabi Musa AS adalah...",
+                        options: [
+                            "A. Injil",
+                            "B. Zabur",
+                            "C. Taurat",
+                            "D. Al-Quran",
+                            "E. Shuhuf"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Kitab Taurat diturunkan kepada Nabi Musa AS. Kitab ini berisi syariat dan petunjuk untuk Bani Israil."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk rukun Islam adalah...",
+                        options: [
+                            "A. Shalat lima waktu",
+                            "B. Berbakti kepada orang tua",
+                            "C. Menuntut ilmu",
+                            "D. Berdakwah",
+                            "E. Berjihad"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Shalat lima waktu adalah salah satu dari lima rukun Islam. Rukun Islam lainnya: 1) Syahadat, 2) Shalat, 3) Zakat, 4) Puasa Ramadhan, 5) Haji bagi yang mampu."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk contoh akhlak terpuji adalah...",
+                        options: [
+                            "A. Membuang sampah sembarangan",
+                            "B. Menghormati orang tua",
+                            "C. Berbohong kepada teman",
+                            "D. Mencontek saat ujian",
+                            "E. Memukul adik"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Menghormati orang tua termasuk akhlak terpuji yang diajarkan dalam Islam. Nabi Muhammad SAW bersabda bahwa ridha Allah tergantung pada ridha orang tua."
+                    },
+                    {
+                        question: "Nabi Muhammad SAW dilahirkan di kota...",
+                        options: [
+                            "A. Madinah",
+                            "B. Mekah",
+                            "C. Yerusalem",
+                            "D. Yatsrib",
+                            "E. Thaif"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Nabi Muhammad SAW dilahirkan di Mekah pada tanggal 12 Rabiul Awal tahun Gajah (570 M)."
+                    },
+                    {
+                        question: "Puasa wajib bagi umat Islam dilaksanakan pada bulan...",
+                        options: [
+                            "A. Muharram",
+                            "B. Rajab",
+                            "C. Syaban",
+                            "D. Ramadhan",
+                            "E. Dzulhijjah"
+                        ],
+                        correctAnswer: 3,
+                        explanation: "Puasa Ramadhan adalah puasa wajib yang dilaksanakan selama satu bulan penuh pada bulan Ramadhan. Ini adalah salah satu dari lima rukun Islam."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk malaikat Allah adalah...",
+                        options: [
+                            "A. Jibril, Mikail, Israfil, Izrail",
+                            "B. Jibril, Mikail, Harut, Marut",
+                            "C. Israfil, Izrail, Harut, Marut",
+                            "D. Jibril, Mikail, Lailatul Qadar",
+                            "E. Israfil, Izrail, Lailatul Qadar"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Malaikat Allah yang wajib diketahui ada 10, termasuk Jibril (penyampai wahyu), Mikail (pembagi rezeki), Israfil (peniup sangkakala), dan Izrail (pencabut nyawa). Harut dan Marut bukan malaikat, sedangkan Lailatul Qadar adalah malam kemuliaan."
+                    },
+                    {
+                        question: "Surah pertama dalam Al-Quran adalah...",
+                        options: [
+                            "A. Al-Fatihah",
+                            "B. Al-Baqarah",
+                            "C. Al-Ikhlas",
+                            "D. Al-Alaq",
+                            "E. An-Nas"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Surah Al-Fatihah adalah surah pertama dalam Al-Quran dan disebut juga Ummul Kitab (induk Al-Quran). Surah ini wajib dibaca dalam setiap rakaat shalat."
+                    }
                 ]
             },
             'SMP': {
                 'Agama Islam': [
                     {
-                question: "Salah satu asmaul husna adalah Al-'Adl yang artinya Maha Adil. Jelaskan bagaimana konsep keadilan Allah SWT dalam kehidupan manusia berdasarkan QS. An-Nisa ayat 58 dan berikan contoh penerapannya dalam kehidupan sehari-hari!",
-                options: [
-                    "A. Keadilan Allah bersifat mutlak dan tidak memandang status sosial, contohnya dalam pembagian rezeki",
-                    "B. Allah hanya adil kepada orang yang beriman saja, contohnya dalam pemberian nikmat",
-                    "C. Keadilan Allah bersifat relatif tergantung amal manusia, contohnya dalam hisab di akhirat",
-                    "D. Allah tidak perlu berbuat adil karena Dia adalah Pemilik mutlak segala sesuatu",
-                    "E. Keadilan Allah hanya berlaku di akhirat saja, tidak di dunia"
-                ],
-                correctAnswer: 0,
-                explanation: "QS. An-Nisa:58 menjelaskan bahwa Allah memerintahkan untuk menunaikan amanah dan berhukum dengan adil. Keadilan Allah bersifat universal dan mencakup semua aspek kehidupan, termasuk pembagian rezeki yang tidak memandang status sosial seseorang."
-            },
-            {
-                question: "Jelaskan perbedaan antara takdir mubram dan takdir mu'allaq berdasarkan pemahaman aqidah Islam, sertakan contoh masing-masing dan bagaimana sikap muslim yang benar dalam menyikapi takdir tersebut!",
-                options: [
-                    "A. Takdir mubram adalah ketetapan mutlak yang tidak bisa diubah seperti kematian, sedangkan takdir mu'allaq bisa diubah dengan ikhtiar seperti rezeki",
-                    "B. Takdir mubram dan mu'allaq sama-sama bisa diubah dengan doa dan usaha",
-                    "C. Takdir mubram adalah ketetapan sementara, sedangkan mu'allaq adalah ketetapan akhir",
-                    "D. Tidak ada perbedaan antara keduanya karena semua takdir sudah ditentukan",
-                    "E. Takdir mubram berlaku untuk urusan dunia, sedangkan mu'allaq untuk urusan akhirat"
-                ],
-                correctAnswer: 0,
-                explanation: "Takdir mubram adalah ketetapan Allah yang pasti terjadi dan tidak dapat diubah seperti kematian, jenis kelamin, atau hari kiamat. Sedangkan takdir mu'allaq adalah ketetapan yang tergantung pada usaha manusia seperti rezeki, kesehatan, atau prestasi. Muslim harus menerima takdir mubram dan berikhtiar untuk takdir mu'allaq."
-            },
-            {
-                question: "Analisislah kandungan surat Al-Baqarah ayat 30 tentang konsep kekhalifahan manusia di bumi! Bagaimana implementasi konsep ini dalam menjaga lingkungan menurut pandangan Islam?",
-                options: [
-                    "A. Manusia ditugasi sebagai khalifah untuk memakmurkan bumi dengan tanggung jawab, termasuk menjaga kelestarian lingkungan",
-                    "B. Kekhalifahan berarti dominasi mutlak manusia atas alam tanpa tanggung jawab",
-                    "C. Konsep khalifah hanya berlaku untuk Nabi Adam dan para nabi saja",
-                    "D. Menjaga lingkungan bukan bagian dari tanggung jawab kekhalifahan",
-                    "E. Kekhalifahan adalah hak istimewa tanpa kewajiban apapun"
-                ],
-                correctAnswer: 0,
-                explanation: "QS. Al-Baqarah:30 menjelaskan bahwa Allah menciptakan manusia sebagai khalifah di bumi yang bertugas memakmurkan dan mengelolanya dengan penuh tanggung jawab. Implementasinya termasuk menjaga keseimbangan ekosistem, tidak berbuat kerusakan, dan memanfaatkan sumber daya alam secara bijak."
-            },
-            {
-                question: "Jelaskan perbedaan antara zakat fitrah dan zakat mal dari segi pengertian, waktu pelaksanaan, dan mustahiknya! Berikan analisis tentang hikmah disyariatkannya kedua jenis zakat tersebut dalam kehidupan sosial!",
-                options: [
-                    "A. Zakat fitrah bersifat tahunan dengan waktu tertentu dan untuk semua mustahik, sedangkan zakat mal berdasarkan harta dengan nisab tertentu",
-                    "B. Zakat fitrah dan zakat mal sama dalam semua aspek kecuali jumlahnya",
-                    "C. Zakat mal lebih penting daripada zakat fitrah",
-                    "D. Zakat fitrah hanya untuk fakir miskin, sedangkan zakat mal untuk semua mustahik",
-                    "E. Tidak ada perbedaan signifikan antara keduanya"
-                ],
-                correctAnswer: 0,
-                explanation: "Zakat fitrah adalah zakat jiwa yang wajib dikeluarkan sebelum shalat Id dengan bahan makanan pokok, sedangkan zakat mal adalah zakat harta dengan nisab dan haul tertentu. Hikmahnya antara lain membersihkan harta, membantu kaum dhuafa, dan memperkuat solidaritas sosial."
-            },
-            {
-                question: "Tafsirkan QS. Al-Hujurat ayat 13 tentang konsep persaudaraan dalam Islam dan bagaimana implementasinya dalam kehidupan multikultural di Indonesia!",
-                options: [
-                    "A. Ayat ini menegaskan bahwa kemuliaan manusia di sisi Allah berdasarkan ketakwaan, bukan suku atau ras",
-                    "B. Ayat ini membatasi persaudaraan hanya sesama muslim",
-                    "C. Konsep persaudaraan dalam ayat ini hanya berlaku untuk bangsa Arab",
-                    "D. Ayat ini mengajarkan superioritas suatu bangsa atas bangsa lain",
-                    "E. Tidak ada relevansi ayat ini dengan kehidupan multikultural"
-                ],
-                correctAnswer: 0,
-                explanation: "QS. Al-Hujurat:13 menegaskan bahwa Allah menciptakan manusia berbangsa-bangsa untuk saling mengenal, dan yang paling mulia adalah yang paling bertakwa. Implementasinya di Indonesia adalah dengan sikap toleransi, menghargai perbedaan, dan menjalin kerjasama dalam kebajikan."
-            },
-            {
-                question: "Jelaskan secara rinci tahapan-tahapan perkembangan fiqih Islam sejak masa Rasulullah SAW hingga masa kodifikasi! Apa kontribusi penting Imam Mazhab dalam perkembangan ilmu fiqih?",
-                options: [
-                    "A. Dimulai dari masa Rasulullah, sahabat, tabi'in, hingga kodifikasi dengan kontribusi sistematisasi metodologi ijtihad",
-                    "B. Fiqih berkembang secara instan tanpa tahapan",
-                    "C. Perkembangan fiqih hanya terjadi pada masa modern",
-                    "D. Imam Mazhab tidak memberikan kontribusi berarti",
-                    "E. Fiqih sudah sempurna sejak awal tanpa perlu perkembangan"
-                ],
-                correctAnswer: 0,
-                explanation: "Perkembangan fiqih melalui: 1) Masa Rasulullah (fiqih bersumber langsung dari wahyu), 2) Masa sahabat (ijtihad berdasarkan kebutuhan), 3) Masa tabi'in (pengembangan regional), 4) Masa kodifikasi (sistematisasi ilmu). Imam Mazhab berkontribusi dengan metodologi ijtihad yang terstruktur."
-            },
-            {
-                question: "Analisislah hadis tentang niat (innamal a'malu binniyat) dari segi sanad, matan, dan relevansinya dengan kehidupan modern! Bagaimana penerapan konsep niat yang benar dalam ibadah dan muamalah?",
-                options: [
-                    "A. Hadis sahih dengan sanad muttasil, matan jelas, dan relevan sebagai fondasi semua amal",
-                    "B. Hadis ini termasuk hadis dhaif yang tidak bisa diamalkan",
-                    "C. Konsep niat hanya berlaku untuk ibadah mahdhah saja",
-                    "D. Niat tidak penting selama amalannya benar",
-                    "E. Hadis ini hanya untuk kalangan tertentu"
-                ],
-                correctAnswer: 0,
-                explanation: "Hadis tentang niat diriwayatkan oleh Bukhari-Muslim dengan sanad sahih. Penerapannya: 1) Dalam ibadah: niat membedakan antara ibadah dan adat, 2) Dalam muamalah: niat baik menjadikan aktivitas dunia bernilai ibadah."
-            },
-            {
-                question: "Jelaskan konsep jihad menurut Islam yang sebenarnya dengan merujuk pada QS. Al-Ankabut ayat 69 dan hadis-hadis sahih! Bagaimana membedakan antara jihad yang benar dengan tindakan radikalisme?",
-                options: [
-                    "A. Jihad mencakup perjuangan spiritual dan fisik dengan aturan ketat, berbeda dengan radikalisme yang melampaui batas",
-                    "B. Jihad identik dengan radikalisme dan kekerasan",
-                    "C. Jihad hanya berarti perang tanpa batasan",
-                    "D. Konsep jihad sudah tidak relevan di zaman modern",
-                    "E. Radikalisme adalah bentuk jihad yang paling utama"
-                ],
-                correctAnswer: 0,
-                explanation: "QS. Al-Ankabut:69 menjelaskan jihad sebagai usaha sungguh-sungguh di jalan Allah. Bentuk jihad: 1) Jihad nafs (melawan hawa nafsu), 2) Jihad ilmi (menuntut ilmu), 3) Jihad qital (perang dengan aturan ketat). Radikalisme bertentangan dengan prinsip Islam yang melarang membunuh tanpa hak."
-            },
-            {
-                question: "Jelaskan hakikat muamalah dalam Islam dengan merujuk pada QS. Al-Baqarah ayat 275-279 tentang larangan riba! Bagaimana penerapan sistem ekonomi Islam yang sesuai dengan prinsip syariah di era modern?",
-                options: [
-                    "A. Muamalah harus adil, transparan, dan bebas riba dengan alternatif sistem bagi hasil",
-                    "B. Sistem ekonomi Islam sama saja dengan kapitalisme",
-                    "C. Riba diperbolehkan dalam kondisi tertentu",
-                    "D. Tidak ada sistem ekonomi khusus dalam Islam",
-                    "E. Prinsip syariah tidak bisa diterapkan di era modern"
-                ],
-                correctAnswer: 0,
-                explanation: "QS. Al-Baqarah 275-279 melarang riba karena mengandung kezaliman. Penerapan ekonomi syariah: 1) Perbankan syariah dengan sistem bagi hasil, 2) Kontrak bisnis yang jelas (mudharabah, musyarakah), 3) Zakat sebagai instrumen distribusi kekayaan."
-            },
-            {
-                question: "Analisislah sejarah pembukuan Al-Qur'an dari masa Rasulullah SAW hingga masa Khalifah Utsman bin Affan! Mengapa proses kodifikasi ini penting bagi umat Islam?",
-                options: [
-                    "A. Tahapannya: penghafalan dan pencatatan terpisah di masa Nabi, pengumpulan di masa Abu Bakar, penyatuan mushaf di masa Utsman",
-                    "B. Al-Qur'an langsung dibukukan sempurna di masa Nabi",
-                    "C. Proses pembukuan hanya terjadi di masa modern",
-                    "D. Pembukuan Al-Qur'an tidak penting karena cukup dihafal",
-                    "E. Khalifah Utsman mengubah isi Al-Qur'an"
-                ],
-                correctAnswer: 0,
-                explanation: "Proses pembukuan penting untuk: 1) Menjaga kemurnian Al-Qur'an, 2) Standarisasi bacaan, 3) Memudahkan pembelajaran generasi berikut. Mushaf Utsmani menjadi rujukan umat Islam hingga kini."
-            },
-            {
-                question: "Jelaskan konsep hablum minallah dan hablum minannas dalam Islam serta kaitannya dengan pembentukan karakter muslim yang paripurna! Berikan contoh praktis penerapannya dalam kehidupan remaja!",
-                options: [
-                    "A. Keseimbangan hubungan vertikal dengan Allah dan horizontal dengan manusia, contoh: shalat tepat waktu dan berbuat baik kepada teman",
-                    "B. Hanya hablum minallah yang penting untuk kesalehan pribadi",
-                    "C. Hablum minannas lebih utama daripada ibadah ritual",
-                    "D. Keduanya tidak perlu diseimbangkan",
-                    "E. Konsep ini hanya untuk orang dewasa"
-                ],
-                correctAnswer: 0,
-                explanation: "Muslim paripurna menjaga kedua hubungan: 1) Hablum minallah melalui ibadah mahdhah, 2) Hablum minannas melalui akhlak mulia. Contoh remaja: disiplin mengaji (hablum minallah) dan tidak bullying (hablum minannas)."
-            },
-            {
-                question: "Jelaskan perbedaan antara ilmu kalam, tasawuf, dan filsafat Islam dalam metodologi dan fokus kajiannya! Bagaimana ketiganya dapat saling melengkapi dalam pengembangan pemikiran Islam?",
-                options: [
-                    "A. Ilmu kalam fokus pada akidah dengan pendekatan logika, tasawuf pada penyucian jiwa, filsafat pada pemikiran mendalam",
-                    "B. Ketiganya sama saja tanpa perbedaan",
-                    "C. Hanya ilmu kalam yang benar dalam Islam",
-                    "D. Tasawuf bertentangan dengan ajaran Islam",
-                    "E. Filsafat haram dipelajari dalam Islam"
-                ],
-                correctAnswer: 0,
-                explanation: "Ketiganya melengkapi: 1) Ilmu kalam menjaga kemurnian akidah, 2) Tasawuf menginternalisasi nilai spiritual, 3) Filsafat mengembangkan pemikiran kritis. Integrasinya terlihat dalam karya Al-Ghazali yang menguasai ketiganya."
-            },
-            {
-                question: "Analisislah perkembangan seni budaya Islam dari masa klasik hingga modern dengan menyoroti prinsip-prinsip syariah yang mengaturnya! Bagaimana menyikapi fenomena kontemporer seperti musik dan seni lukis dalam perspektif fiqih Islam?",
-                options: [
-                    "A. Seni Islam berkembang dengan prinsip tidak mengandung syirik, maksiat, atau melalaikan dari Allah",
-                    "B. Semua bentuk seni haram dalam Islam",
-                    "C. Tidak ada batasan syariah dalam berekspresi seni",
-                    "D. Seni budaya hanya boleh meniru tradisi Arab",
-                    "E. Seni modern tidak mungkin sesuai dengan syariah"
-                ],
-                correctAnswer: 0,
-                explanation: "Prinsip seni Islam: 1) Tidak menampilkan yang haram, 2) Tidak melalaikan dari kewajiban, 3) Bernilai estetika dan edukasi. Seni kontemporer boleh selama memenuhi kriteria syariah dan tidak bertentangan dengan nilai Islam."
-            },
-            {
-                question: "Jelaskan konsep amar ma'ruf nahi munkar menurut QS. Ali Imran ayat 104 dan bagaimana strategi efektif menerapkannya di kalangan remaja masa kini!",
-                options: [
-                    "A. Menyeru kebaikan dan mencegah kemungkaran dengan hikmah dan teladan baik, khususnya melalui media yang digemari remaja",
-                    "B. Amar ma'ruf berarti memaksa orang untuk taat",
-                    "C. Nahi munkar hanya tugas ulama bukan remaja",
-                    "D. Metode kekerasan diperbolehkan dalam nahi munkar",
-                    "E. Konsep ini sudah tidak relevan untuk zaman sekarang"
-                ],
-                correctAnswer: 0,
-                explanation: "Strategi efektif: 1) Pendekatan persuasif bukan konfrontatif, 2) Memanfaatkan media sosial untuk dakwah kreatif, 3) Menjadi teladan sebelum menasihati, 4) Kolaborasi dengan komunitas positif."
-            },
-            {
-                question: "Analisislah peran masjid sebagai pusat peradaban Islam berdasarkan sejarah masa Rasulullah SAW! Bagaimana revitalisasi fungsi masjid di era modern untuk menjawab tantangan umat?",
-                options: [
-                    "A. Masjid bukan hanya tempat shalat tetapi pusat pendidikan, sosial, dan pembinaan umat seperti Masjid Nabawi dulu",
-                    "B. Fungsi masjid hanya untuk ibadah ritual semata",
-                    "C. Masjid harus menutup diri dari perkembangan zaman",
-                    "D. Tidak mungkin mengembalikan peran masjid seperti dulu",
-                    "E. Masjid hanya untuk kalangan tertentu"
-                ],
-                correctAnswer: 0,
-                explanation: "Revitalisasi fungsi masjid: 1) Pusat pembelajaran sepanjang hayat, 2) Layanan sosial (kesehatan, konseling), 3) Inkubator usaha halal, 4) Ruang dialog antar generasi dan budaya dengan tetap menjaga kesuciannya."
-            },
-            {
-                question: "Jelaskan hakikat kebahagiaan dalam perspektif Islam dengan merujuk pada konsep al-falah dalam QS. Al-Mu'minun ayat 1-11! Bagaimana mencapainya di tengah tantangan kehidupan modern?",
-                options: [
-                    "A. Kebahagiaan sejati adalah ketenangan hati dengan iman dan taqwa, bukan sekadar materi",
-                    "B. Kebahagiaan identik dengan kekayaan dan kesenangan duniawi",
-                    "C. Konsep al-falah hanya untuk akhirat bukan dunia",
-                    "D. Tidak mungkin bahagia di zaman modern",
-                    "E. Kebahagiaan adalah mitos dalam agama"
-                ],
-                correctAnswer: 0,
-                explanation: "Mencapai al-falah di era modern: 1) Keseimbangan dunia-akhirat, 2) Bersyukur atas nikmat sekecil apapun, 3) Memaknai kesulitan sebagai ujian, 4) Membangun relasi positif dengan Allah dan manusia, 5) Hidup dengan tujuan jelas sesuai syariah."
-            },
-            {
-                question: "Jelaskan perkembangan tafsir Al-Qur'an dari periode klasik hingga kontemporer dengan menyebutkan karakteristik dan metode masing-masing periode!",
-                options: [
-                    "A. Tafsir bi alma'tsur (riwayat), bi ra'yi (akal), tematik, dan kontekstual dengan pendekatan masing-masing",
-                    "B. Metode tafsir tidak pernah berkembang sejak dulu",
-                    "C. Hanya tafsir klasik yang valid dalam Islam",
-                    "D. Tafsir kontemporer menyimpang dari ajaran Islam",
-                    "E. Tidak perlu mempelajari berbagai metode tafsir"
-                ],
-                correctAnswer: 0,
-                explanation: "Perkembangan tafsir: 1) Klasik (fokus pada bahasa dan riwayat), 2) Pertengahan (analisis lebih sistematis), 3) Modern (tematik dan kontekstual). Masing-masing periode memiliki kelebihan dan saling melengkapi dalam memahami Al-Qur'an."
-            },
-            {
-                question: "Analisislah peran wanita dalam peradaban Islam berdasarkan sejarah para shahabiyah! Bagaimana mengaktualisasikan keteladanan mereka di era kesetaraan gender saat ini?",
-                options: [
-                    "A. Wanita muslimah memiliki peran multidimensional (pendidikan, sosial, ekonomi) dengan tetap menjaga nilai syariah",
-                    "B. Wanita hanya boleh di rumah tanpa peran publik",
-                    "C. Kesetaraan gender berarti menolak semua nilai agama",
-                    "D. Tidak ada teladan dari shahabiyah untuk era modern",
-                    "E. Peran wanita dalam Islam sangat terbatas"
-                ],
-                correctAnswer: 0,
-                explanation: "Aktualisasi keteladanan shahabiyah: 1) Khadijah sebagai pebisnis sukses yang mendukung dakwah, 2) Aisyah sebagai ilmuwan dan pendidik, 3) Nusaybah sebagai pejuang. Peran wanita modern dapat seluas mungkin selama menjaga aurat, adab, dan tidak mengabaikan tanggung jawab utama."
-            },
-            {
-                question: "Jelaskan konsep ukhuwah islamiyah menurut QS. Al-Hujurat ayat 10 dan tantangan penerapannya di era media sosial! Bagaimana membangun persaudaraan sejati di tengah perbedaan pendapat?",
-                options: [
-                    "A. Ukhuwah adalah persaudaraan atas dasar iman yang harus dijaga meski berbeda pendapat, dengan etika bermedia sosial yang baik",
-                    "B. Ukhuwah hanya untuk yang sepaham dalam semua hal",
-                    "C. Media sosial harus dihindari karena merusak ukhuwah",
-                    "D. Perbedaan pendapat menghancurkan ukhuwah islamiyah",
-                    "E. Konsep ukhuwah tidak mungkin diterapkan di dunia digital"
-                ],
-                correctAnswer: 0,
-                explanation: "Membangun ukhuwah di media sosial: 1) Menyebarkan konten positif, 2) Menghindari debat kusir, 3) Menghormati perbedaan yang masih dalam koridor syariah, 4) Fokus pada persamaan bukan perbedaan, 5) Menjaga adab berkomunikasi."
-            },
-            {
-                question: "Jelaskan makna hakiki dari tauhid rububiyah, uluhiyah, dan asma wa sifat beserta implikasinya dalam kehidupan sehari-hari!",
-                options: [
-                    "A. Tauhid rububiyah (pengakuan Allah sebagai Pencipta), uluhiyah (penghambaan hanya kepada-Nya), asma wa sifat (menetapkan nama dan sifat Allah tanpa tahrif)",
-                    "B. Ketiganya adalah konsep yang sama tanpa perbedaan",
-                    "C. Hanya tauhid uluhiyah yang penting dalam Islam",
-                    "D. Tauhid asma wa sifat berarti menyerupakan Allah dengan makhluk",
-                    "E. Konsep tauhid tidak mempengaruhi kehidupan sehari-hari"
-                ],
-                correctAnswer: 0,
-                explanation: "Implikasi tauhid: 1) Rububiyah: meyakini semua kejadian atas kehendak Allah, 2) Uluhiyah: mengikhlaskan ibadah hanya untuk Allah, 3) Asma wa sifat: meneladani sifat-sifat Allah yang boleh diteladani (seperti Ar-Rahman dalam berbuat baik)."
-            },
-            {
-                question: "Analisislah fenomena hijrah di kalangan selebriti dan dampaknya terhadap pemahaman agama masyarakat! Bagaimana menyikapinya secara bijak menurut prinsip-prinsip dakwah Islam?",
-                options: [
-                    "A. Hijrah positif jika meningkatkan ketakwaan, tetapi perlu pendampingan agar pemahaman agama tidak dangkal",
-                    "B. Hijrah selebriti hanya pencitraan tanpa makna",
-                    "C. Semua hijrah selebriti pasti baik dan harus diikuti",
-                    "D. Fenomena hijrah merusak citra agama",
-                    "E. Selebriti tidak boleh menyebarkan ajaran agama"
-                ],
-                correctAnswer: 0,
-                explanation: "Sikap bijak: 1) Apresiasi niat baik hijrah, 2) Kritisi konten yang tidak sesuai syariah, 3) Saring sebelum sharing konten keagamaan, 4) Merujuk kepada ulama yang kompeten, 5) Fokus pada substansi bukan figur tertentu."
-            },
-            {
-                question: "Jelaskan konsep waris dalam Islam berdasarkan QS. An-Nisa ayat 11-12 dan hikmah di balik pembagian yang tidak sama antara laki-laki dan perempuan!",
-                options: [
-                    "A. Pembagian berdasarkan tanggung jawab finansial dimana laki-laki menanggung lebih banyak kewajiban",
-                    "B. Sistem waris Islam mendiskriminasi perempuan",
-                    "C. Pembagian sama rata lebih adil daripada sistem Islam",
-                    "D. Hanya laki-laki yang berhak mendapat warisan",
-                    "E. Hikmah pembagian warisan tidak bisa dipahami manusia"
-                ],
-                correctAnswer: 0,
-                explanation: "Hikmah pembagian: 1) Laki-laki bertanggung jawab atas nafkah keluarga, 2) Perempuan mendapat mahar dan tidak wajib menafkahi, 3) Keadilan Islam bersifat komprehensif bukan parsial, 4) Hak perempuan sudah dijamin dalam bentuk lain seperti nafkah dari suami dan keluarga."
-            },
-            {
-                question: "Jelaskan kriteria makanan halal dan thayyib menurut Islam serta tantangan penerapannya di era globalisasi! Bagaimana strategi mempertahankan identitas halal lifestyle di tengah dominasi produk global?",
-                options: [
-                    "A. Halal: sesuai syariah, thayyib: bergizi dan aman; dengan strategi sertifikasi halal, edukasi, dan penguatan produk lokal",
-                    "B. Kriteria halal hanya untuk daging saja",
-                    "C. Di era globalisasi tidak mungkin menjaga makanan halal",
-                    "D. Makanan thayyib tidak penting selama halal",
-                    "E. Lifestyle halal bertentangan dengan modernitas"
-                ],
-                correctAnswer: 0,
-                explanation: "Strategi halal lifestyle: 1) Kesadaran konsumen muslim, 2) Dukungan regulasi pemerintah, 3) Inovasi produk halal yang kompetitif, 4) Kolaborasi industri halal global, 5) Edukasi sejak dini tentang pentingnya konsumsi halal thayyib."
-            },
-            {
-                question: "Analisislah perbedaan pendapat ulama tentang hukum demokrasi dalam Islam! Bagaimana menyikapi perbedaan tersebut dalam konteks kehidupan berbangsa di Indonesia?",
-                options: [
-                    "A. Ada yang membolehkan dengan syarat tidak bertentangan dengan syariah, ada yang menolak; sikap bijak adalah menghargai perbedaan pendapat yang ilmiah",
-                    "B. Semua ulama sepakat demokrasi haram",
-                    "C. Demokrasi mutlak sesuai dengan Islam",
-                    "D. Tidak boleh ada perbedaan pendapat dalam masalah ini",
-                    "E. Indonesia harus meninggalkan demokrasi karena tidak islami"
-                ],
-                correctAnswer: 0,
-                explanation: "Sikap bijak: 1) Menghargai ijtihad ulama yang berkompeten, 2) Fokus pada nilai-nilai universal yang sejalan dengan Islam (keadilan, musyawarah), 3) Menjaga persatuan bangsa meski berbeda pandangan, 4) Berpartisipasi positif dalam sistem yang ada selama tidak bertentangan dengan akidah."
-            },
-            {
-                question: "Jelaskan konsep khilafah dalam pemikiran Islam klasik dan modern serta relevansinya dengan sistem negara bangsa saat ini!",
-                options: [
-                    "A. Konsep khilafah berkembang sesuai konteks sejarah; sistem negara modern bisa diterima selama menjamin penerapan syariah",
-                    "B. Khilafah adalah satu-satunya sistem pemerintahan yang sah dalam Islam",
-                    "C. Konsep khilafah sudah usang dan tidak relevan",
-                    "D. Semua negara wajib menerapkan khilafah secara formal",
-                    "E. Tidak ada konsep pemerintahan dalam Islam"
-                ],
-                correctAnswer: 0,
-                explanation: "Relevansi konsep: 1) Nilai-nilai universal khilafah (keadilan, musyawarah) bisa diadopsi dalam berbagai sistem, 2) Formalisme institusi kurang penting dibanding substansi penerapan syariah, 3) Konteks negara bangsa memungkinkan keragaman model pemerintahan selama prinsip Islam terjaga."
-            },
-            {
-                question: "Jelaskan sejarah perkembangan ilmu hadis dari masa Rasulullah SAW hingga masa pentadwinan! Apa kontribusi utama para imam hadis seperti Bukhari dan Muslim dalam menjaga kemurnian hadis?",
-                options: [
-                    "A. Tahapannya: penghafalan, pencatatan terpisah, seleksi ketat, kodifikasi dengan metode kritik sanad dan matan",
-                    "B. Ilmu hadis muncul tiba-tiba tanpa perkembangan",
-                    "C. Imam Bukhari dan Muslim menulis semua hadis tanpa seleksi",
-                    "D. Kritik hadis tidak penting dalam Islam",
-                    "E. Semua hadis sama sahihnya tanpa perlu verifikasi"
-                ],
-                correctAnswer: 0,
-                explanation: "Kontribusi imam hadis: 1) Metode verifikasi sanad (mata rantai periwayat), 2) Kritik matan (kandungan hadis), 3) Klasifikasi hadis (sahih, hasan, dhaif), 4) Penyusunan kitab sistematis yang menjadi rujukan umat."
-            },
-            {
-                question: "Analisislah dampak positif dan negatif perkembangan teknologi digital terhadap akhlak remaja muslim! Bagaimana strategi pendidikan Islam dalam menghadapi tantangan tersebut?",
-                options: [
-                    "A. Dampak positif: akses ilmu luas; negatif: konten tidak pantas; strategi: literasi digital, penguatan karakter, dan pendampingan",
-                    "B. Teknologi digital hanya berdampak negatif bagi remaja",
-                    "C. Tidak perlu adaptasi karena teknologi bersifat netral",
-                    "D. Remaja muslim harus menghindari semua teknologi",
-                    "E. Pendidikan Islam tidak bisa menjawab tantangan digital"
-                ],
-                correctAnswer: 0,
-                explanation: "Strategi pendidikan: 1) Integrasi nilai Islam dalam penggunaan teknologi, 2) Pembekalan fiqih kontemporer terkait dunia digital, 3) Keteladanan guru/dai di media sosial, 4) Penguatan kontrol diri dan tanggung jawab, 5) Kolaborasi dengan orang tua dalam pengawasan."
-            },
-            {
-                question: "Jelaskan hakikat dan urgensi pendidikan akhlak dalam Islam merujuk pada konsep Rasulullah SAW yang diutus untuk menyempurnakan akhlak! Bagaimana implementasinya dalam kurikulum pendidikan modern?",
-                options: [
-                    "A. Akhlak adalah inti ajaran Islam yang harus diintegrasikan dalam semua mata pelajaran dengan metode keteladanan dan pembiasaan",
-                    "B. Pendidikan akhlak hanya untuk sekolah agama",
-                    "C. Akhlak tidak perlu diajarkan secara formal",
-                    "D. Kurikulum modern tidak mungkin mengakomodasi pendidikan akhlak",
-                    "E. Akhlak tidak relevan dengan pendidikan akademik"
-                ],
-                correctAnswer: 0,
-                explanation: "Implementasi: 1) Integrasi nilai-nilai akhlak dalam semua mata pelajaran, 2) Program pembiasaan positif (kultur sekolah), 3) Keteladanan guru dan staf sekolah, 4) Evaluasi tidak hanya kognitif tetapi juga afektif, 5) Kolaborasi dengan keluarga dan masyarakat."
-            },
-            {
-                question: "Jelaskan perbedaan antara madrasah dan sekolah umum dari perspektif filosofis dan kurikulum pendidikan Islam! Bagaimana membangun sinergi antara keduanya untuk kemajuan pendidikan nasional?",
-                options: [
-                    "A. Madrasah menekankan integrasi ilmu agama dan umum dengan ciri khas keislaman; sinergi bisa dibangun dengan saling melengkapi keunggulan masing-masing",
-                    "B. Madrasah lebih unggul dalam semua aspek",
-                    "C. Sekolah umum lebih baik daripada madrasah",
-                    "D. Tidak mungkin ada sinergi antara keduanya",
-                    "E. Perbedaan keduanya hanya pada nama saja"
-                ],
-                correctAnswer: 0,
-                explanation: "Membangun sinergi: 1) Pertukaran best practice, 2) Pengayaan kurikulum (sekolah umum bisa adopsi pendidikan karakter ala madrasah), 3) Madrasah memperkuat penguasaan sains dan teknologi, 4) Kerjasama dalam penelitian dan pengembangan pendidikan, 5) Saling mendukung dalam mencapai tujuan pendidikan nasional."
-            },
-            {
-                question: "Analisislah konsep Islam Rahmatan lil 'Alamin dalam konteks kehidupan global saat ini! Bagaimana implementasinya dalam hubungan antarumat beragama di Indonesia?",
-                options: [
-                    "A. Islam membawa rahmat untuk semua dengan prinsip keadilan, toleransi yang aktif, dan kerjasama dalam kebaikan",
-                    "B. Konsep rahmat hanya untuk muslim saja",
-                    "C. Rahmatan lil 'alamin berarti mengislamkan semua orang",
-                    "D. Tidak mungkin implementasi di masyarakat majemuk",
-                    "E. Konsep ini bertentangan dengan globalisasi"
-                ],
-                correctAnswer: 0,
-                explanation: "Implementasi: 1) Menjadi teladan akhlak mulia, 2) Dialog konstruktif antariman, 3) Kerjasama membangun kemaslahatan umum, 4) Menolak segala bentuk kekerasan dan diskriminasi, 5) Menjaga hak-hak minoritas dengan prinsip keadilan Islam."
-            }
+                        question: "Perhatikan pernyataan berikut tentang sifat wajib Allah: 1) Wujud, 2) Qidam, 3) Baqa', 4) Mukhalafatu lil hawaditsi. Yang termasuk sifat ma'ani adalah...",
+                        options: [
+                            "A. 1 dan 2",
+                            "B. 1 dan 3",
+                            "C. 2 dan 3",
+                            "D. 2 dan 4",
+                            "E. 3 dan 4"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Sifat ma'ani adalah sifat yang dapat digambarkan dengan akal. Dari pilihan di atas, Qidam (kekal tanpa permulaan) dan Baqa' (kekal tanpa akhir) termasuk sifat ma'ani. Wujud adalah sifat nafsiyah, sedangkan Mukhalafatu lil hawaditsi adalah sifat ma'nawiyah."
+                    },
+                    {
+                        question: "Perhatikan ayat Al-Qur'an berikut: 'Wa mā arsalnāka illā raḥmatan lil-'ālamīn' (QS. Al-Anbiya: 107). Makna dari ayat tersebut adalah...",
+                        options: [
+                            "A. Kami tidak mengutusmu kecuali sebagai rahmat bagi seluruh alam",
+                            "B. Kami tidak mengutusmu kecuali sebagai pemberi peringatan",
+                            "C. Kami tidak mengutusmu kecuali sebagai pembawa kabar gembira",
+                            "D. Kami tidak mengutusmu kecuali sebagai saksi atas umat manusia",
+                            "E. Kami tidak mengutusmu kecuali sebagai penutup para nabi"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Ayat tersebut berarti 'Dan tidaklah Kami mengutusmu (Muhammad) melainkan sebagai rahmat bagi seluruh alam' (QS. Al-Anbiya: 107). Ini menunjukkan bahwa Nabi Muhammad SAW diutus sebagai rahmat untuk semua makhluk, bukan hanya manusia tetapi juga jin dan alam semesta."
+                    },
+                    {
+                        question: "Hukum melaksanakan shalat Jumat bagi laki-laki adalah...",
+                        options: [
+                            "A. Fardhu 'ain",
+                            "B. Fardhu kifayah",
+                            "C. Sunnah muakkad",
+                            "D. Sunnah ghairu muakkad",
+                            "E. Mubah"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Shalat Jumat hukumnya fardhu 'ain bagi setiap muslim laki-laki yang telah baligh, berakal, merdeka, dan tidak memiliki uzur syar'i. Dalilnya terdapat dalam QS. Al-Jumu'ah ayat 9."
+                    },
+                    {
+                        question: "Perhatikan hadis berikut: 'Man ṣallā 'alayya ṣallā Allāhu 'alayhi 'asyra' (HR. Muslim). Arti hadis tersebut adalah...",
+                        options: [
+                            "A. Barangsiapa yang shalat untukku, maka Allah akan memberinya pahala",
+                            "B. Barangsiapa yang bershalawat kepadaku sekali, maka Allah akan bershalawat kepadanya sepuluh kali",
+                            "C. Barangsiapa yang mengikuti sunnahku, maka dia termasuk golonganku",
+                            "D. Barangsiapa yang membaca shalawat, maka dosanya diampuni",
+                            "E. Barangsiapa yang mencintaiku, maka dia akan bersamaku di surga"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Hadis tersebut artinya 'Barangsiapa yang bershalawat kepadaku sekali, maka Allah akan bershalawat kepadanya sepuluh kali' (HR. Muslim). Ini menunjukkan keutamaan membaca shalawat kepada Nabi Muhammad SAW."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk contoh akhlak terpuji adalah...",
+                        options: [
+                            "A. Sombong ketika mendapat prestasi",
+                            "B. Berbohong untuk kebaikan",
+                            "C. Membantu teman yang kesulitan",
+                            "D. Menghina agama lain",
+                            "E. Memutuskan silaturahmi"
+                        ],
+                        correctAnswer: 2,
+                        explanation: "Membantu teman yang kesulitan termasuk akhlak terpuji yang diajarkan dalam Islam. Nabi Muhammad SAW bersabda: 'Allah akan menolong hamba-Nya selama hamba itu menolong saudaranya' (HR. Muslim)."
+                    },
+                    {
+                        question: "Perhatikan pernyataan berikut tentang rukun Islam: 1) Syahadat, 2) Shalat, 3) Zakat, 4) Puasa, 5) Haji. Urutan yang benar adalah...",
+                        options: [
+                            "A. 1-2-3-4-5",
+                            "B. 1-3-2-4-5",
+                            "C. 2-1-3-4-5",
+                            "D. 2-3-1-4-5",
+                            "E. 3-1-2-4-5"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Urutan rukun Islam adalah: 1) Syahadat (persaksian bahwa tidak ada Tuhan selain Allah dan Muhammad adalah utusan Allah), 2) Mendirikan shalat, 3) Membayar zakat, 4) Puasa Ramadhan, 5) Haji bagi yang mampu."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk syarat wajib zakat fitrah adalah...",
+                        options: [
+                            "A. Islam, merdeka, memiliki kelebihan makanan",
+                            "B. Islam, baligh, berakal, memiliki harta",
+                            "C. Islam, mukallaf, memiliki nishab, haul",
+                            "D. Islam, mampu, memiliki kelebihan harta",
+                            "E. Islam, baligh, berakal, merdeka"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Syarat wajib zakat fitrah adalah: 1) Beragama Islam, 2) Merdeka (bukan budak), 3) Memiliki kelebihan makanan untuk diri dan keluarganya pada malam dan hari raya Idul Fitri."
+                    },
+                    {
+                        question: "Perhatikan ayat berikut: 'Wa aqīmuṣ-ṣalāta wa ātuz-zakāta wa arka'ū ma'ar-rāki'īn' (QS. Al-Baqarah: 43). Kandungan utama ayat tersebut adalah...",
+                        options: [
+                            "A. Perintah mendirikan shalat dan menunaikan zakat",
+                            "B. Perintah shalat dan ruku' bersama orang yang ruku'",
+                            "C. Kewajiban shalat dan zakat bagi orang beriman",
+                            "D. Keutamaan shalat berjamaah",
+                            "E. Pentingnya shalat dan zakat dalam Islam"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Ayat tersebut berarti 'Dan dirikanlah shalat, tunaikanlah zakat, dan ruku'lah bersama orang-orang yang ruku'' (QS. Al-Baqarah: 43). Kandungan utamanya adalah perintah mendirikan shalat dan menunaikan zakat."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk sunnah dalam berwudhu adalah...",
+                        options: [
+                            "A. Membaca basmalah",
+                            "B. Membasuh seluruh kepala",
+                            "C. Membasuh kedua kaki sampai mata kaki",
+                            "D. Mengusap sebagian kepala",
+                            "E. Berkumur-kumur dan menghirup air ke hidung"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Membaca basmalah sebelum wudhu termasuk sunnah. Yang termasuk fardhu wudhu adalah: 1) Membasuh muka, 2) Membasuh kedua tangan sampai siku, 3) Mengusap sebagian kepala, 4) Membasuh kedua kaki sampai mata kaki."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk pembatal wudhu adalah...",
+                        options: [
+                            "A. Makan dan minum",
+                            "B. Tertawa terbahak-bahak",
+                            "C. Keluar darah dari tubuh",
+                            "D. Bersentuhan dengan lawan jenis",
+                            "E. Keluar angin dari dubur"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Yang termasuk pembatal wudhu adalah: 1) Keluarnya sesuatu dari qubul atau dubur (kencing, tinja, angin), 2) Hilang akal (tidur, pingsan, mabuk), 3) Bersentuhan kulit antara laki-laki dan perempuan yang bukan mahram dengan syahwat, 4) Menyentuh kemaluan dengan telapak tangan."
+                    }
                 ]
             },
             'SMA/SMK': {
                 'Agama Islam': [
                     {
-                question: "Analisislah konsep tauhid rububiyah, uluhiyah, dan asma wa sifat beserta contoh penerapannya dalam kehidupan modern!",
-                options: [
-                    "A. Tauhid rububiyah mengakui Allah sebagai pencipta, uluhiyah sebagai satu-satunya yang berhak disembah, asma wa sifat sebagai nama dan sifat Allah. Contoh: penggunaan teknologi dengan tetap meyakini Allah sebagai penentu hasil.",
-                    "B. Tauhid hanya tentang mengakui Allah sebagai pencipta tanpa perlu menyembah-Nya secara khusus.",
-                    "C. Konsep tauhid tidak relevan dengan kehidupan modern karena bersifat tradisional.",
-                    "D. Tauhid uluhiyah berarti mengakui banyak tuhan selama tuhan utama adalah Allah.",
-                    "E. Asma wa sifat hanya untuk diketahui tanpa perlu diimani."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A benar karena mencakup tiga konsep tauhid secara komprehensif dan memberikan contoh relevan di era modern."
-            },
-            {
-                question: "Tafsirkan QS. Al-Baqarah: 30 tentang konsep kekhalifahan manusia di bumi dan implikasinya terhadap tanggung jawab ekologis menurut pandangan ulama kontemporer!",
-                options: [
-                    "A. Kekhalifahan adalah mandat untuk memakmurkan bumi dengan prinsip lestari, menurut Yusuf Qaradawi hal ini mencakup pelestarian lingkungan.",
-                    "B. Kekhalifahan berarti dominasi mutlak manusia atas alam tanpa batasan.",
-                    "C. Ayat ini hanya metafora tanpa implikasi praktis.",
-                    "D. Tanggung jawab ekologis bertentangan dengan konsep kekhalifahan.",
-                    "E. Ulama sepakat bahwa eksploitasi alam adalah bagian dari kekhalifahan."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A tepat karena merujuk pada tafsir otoritatif yang mengintegrasikan spiritualitas dengan tanggung jawab lingkungan."
-            },
-            {
-                question: "Bandingkan pendapat Imam Syafi'i dan Imam Malik tentang hukum musik dalam Islam dengan menyertakan dalil-dalil yang mereka gunakan!",
-                options: [
-                    "A. Imam Malik membolehkan dengan syarat, Imam Syafi'i melarang kecuali rebana pada acara khusus. Keduanya berpegang pada hadis berbeda.",
-                    "B. Keduanya sepakat mutlak melarang semua jenis musik.",
-                    "C. Keduanya membolehkan tanpa batasan selama untuk hiburan.",
-                    "D. Hanya musik klasik yang diperbolehkan oleh kedua imam.",
-                    "E. Tidak ada dalil sahih yang digunakan oleh mereka."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A akurat karena mencerminkan perbedaan pendapat madzhab dengan dasar dalil yang valid."
-            },
-            {
-                question: "Kritik historis terhadap perkembangan hadis palsu (maudhu') pasca wafatnya Nabi Muhammad hingga abad ke-3 Hijriah!",
-                options: [
-                    "A. Motif politik, kesukuan, dan sufisme ekstrem memicu pemalsuan hadis, seperti doktrin Abbasiah vs Umayyah.",
-                    "B. Semua hadis palsu muncul sebelum tahun 100 Hijriah.",
-                    "C. Ulama tidak pernah melakukan verifikasi hadis.",
-                    "D. Hadis palsu hanya terkait hukum waris.",
-                    "E. Tidak ada metodologi untuk mendeteksi hadis palsu."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A komprehensif dengan menyebut faktor multidimensional dan contoh konkret konflik sejarah."
-            },
-            {
-                question: "Analisis kritis terhadap konsep 'jihad' dalam konteks negara minoritas Muslim menurut fatwa Majelis Ulama Eropa!",
-                options: [
-                    "A. Jihad utama adalah dakwah damai dan pembangunan institusi, bukan fisik, sebagaimana fatwa No. 23/2004 MUE.",
-                    "B. Jihad harus selalu berupa perlawanan bersenjata.",
-                    "C. Muslim minoritas dilarang berjihad dalam bentuk apapun.",
-                    "D. Konsep jihad tidak berlaku di luar Darul Islam.",
-                    "E. Jihad hanya wajib di bulan Ramadhan."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A sesuai dengan fatwa kontemporer yang menekankan adaptasi kontekstual tanpa kekerasan."
-            },
-            {
-                question: "Rekonstruksi sejarah perkembangan ilmu kalam dari era Khawarij hingga Asy'ariyah dengan fokus pada perdebatan tentang dosa besar!",
-                options: [
-                    "A. Khawarij mengkafirkan pelaku dosa besar, Murji'ah menunda vonis ke akhirat, Asy'ariyah mengambil jalan tengah.",
-                    "B. Semua aliran sepakat pelaku dosa besar tetap mukmin.",
-                    "C. Hanya Mu'tazilah yang membahas dosa besar.",
-                    "D. Dosa besar tidak pernah jadi tema utama ilmu kalam.",
-                    "E. Pelaku dosa besar otomatis murtad menurut semua aliran."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menggambarkan evolusi pemikiran teologis secara kronologis dan substantif."
-            },
-            {
-                question: "Evaluasi etis terhadap praktik fintech syariah di Indonesia ditinjau dari maqashid syariah (dharuriyyat al-khams)!",
-                options: [
-                    "A. Fintech syariah harus melindungi agama, jiwa, akal, keturunan, dan harta melalui transaksi tanpa riba sesuai OJK No.77/2016.",
-                    "B. Fintech konvensional dan syariah tidak berbeda secara prinsip.",
-                    "C. Blockchain haram dalam semua bentuk fintech syariah.",
-                    "D. Maqashid syariah tidak relevan untuk ekonomi digital.",
-                    "E. Semua fintech otomatis halal selama ada label syariah."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A mengintegrasikan regulasi modern dengan prinsip dasar syariah secara komprehensif."
-            },
-            {
-                question: "Perbandingan konsep negara Islam menurut Abul A'la Maududi dan Ali Abdur Raziq beserta implikasi politiknya!",
-                options: [
-                    "A. Maududi wajibkan negara teokratis, Raziq pisahkan agama-politik secara radikal, mempengaruhi gerakan Islam global vs sekuler.",
-                    "B. Keduanya mendukung khilafah kontemporer.",
-                    "C. Raziq menolak semua bentuk pemerintahan.",
-                    "D. Maududi mendukung sekularisme.",
-                    "E. Tidak ada perbedaan signifikan antara kedua pemikir."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menunjukkan polarisasi pemikiran politik Islam modern dengan akurasi historis."
-            },
-            {
-                question: "Kritik epistemologis terhadap islamisasi ilmu pengetahuan menurut Syed Muhammad Naquib al-Attas vs pendekatan sekularisasi ilmu!",
-                options: [
-                    "A. Al-Attas menekankan konsep ta'dib dan integrasi wahyu-akal, berlawanan dengan sekularisasi yang memisahkan nilai agama dari sains.",
-                    "B. Islamisasi ilmu berarti menolak semua temuan sains Barat.",
-                    "C. Sekularisasi ilmu adalah satu-satunya metode valid.",
-                    "D. Tidak mungkin mengislamkan ilmu modern.",
-                    "E. Kedua pendekatan identik secara metodologis."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A mempresentasikan kontras paradigmatik dengan merujuk konsep kunci ta'dib."
-            },
-            {
-                question: "Analisis sosio-historis tentang resistensi umat Islam Indonesia terhadap radikalisme pasca Reformasi berdasarkan teori kulturalisasi agama!",
-                options: [
-                    "A. Tradisi nahdlatul ulama, lokalitas, dan Pancasila menjadi benteng melalui pendekatan kultural, sebagaimana riset LP3ES 2020.",
-                    "B. Radikalisme diterima luas di Indonesia.",
-                    "C. Tidak ada upaya sistematis melawan radikalisme.",
-                    "D. Kulturalisasi justru memicu radikalisme.",
-                    "E. Hanya pemerintah yang berperan melawan radikalisme."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A didukung data empiris dan kerangka teori yang relevan."
-            },
-            // Soal 11-20
-            {
-                question: "Deconstruct konsep hijab dalam tafsir feminis Muslim kontemporer seperti Amina Wadud vs pandangan tradisional ulama fiqh!",
-                options: [
-                    "A. Wadud anggap hijab sebagai pilihan personal bukan kewajiban syar'i, berbeda dengan konsensus ulama klasik yang mewajibkan.",
-                    "B. Semua feminis Muslim menolak hijab secara mutlak.",
-                    "C. Ulama kontemporer sepakat hijab tidak wajib.",
-                    "D. Hijab hanya budaya Arab tanpa dasar teologis.",
-                    "E. Wadud mendukung pemaksaan hijab oleh negara."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menunjukkan perdebatan kontemporer dengan merujuk aktor kunci secara tepat."
-            },
-            {
-                question: "Evaluasi kritis terhadap pelaksanaan wakaf produktif di Indonesia ditinjau dari UU No.41/2004 dan fatwa DSN-MUI!",
-                options: [
-                    "A. Potensi besar tetapi terkendala regulasi parsial dan SDM, perlu optimalisasi seperti contoh Bogor Agricultural Wakaf.",
-                    "B. Wakaf produktif haram menurut DSN-MUI.",
-                    "C. Seluruh aset wakaf harus digunakan untuk masjid saja.",
-                    "D. UU No.41/2004 melarang wakaf uang.",
-                    "E. Tidak ada contoh sukses wakaf produktif di Indonesia."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memberikan penilaian berimbang antara potensi dan tantangan dengan contoh konkret."
-            },
-            {
-                question: "Studi komparatif tentang konsep ketuhanan dalam filsafat Ibn Arabi (wahdatul wujud) dan kritikusnya Ibn Taymiyyah!",
-                options: [
-                    "A. Ibn Arabi tegas pantheisme transenden, Ibn Taymiyyah tolak dengan keras melalui kitab Naqdh al-Mantiq.",
-                    "B. Keduanya sepakat tentang wahdatul wujud.",
-                    "C. Ibn Taymiyyah mendukung semua pemikiran Ibn Arabi.",
-                    "D. Konsep ketuhanan tidak penting dalam filsafat Islam.",
-                    "E. Wahdatul wujud berarti penyatuan fisik Tuhan dan alam."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menggambarkan polarisasi pemikiran sufisme vs salafisme secara akurat."
-            },
-            {
-                question: "Kritik metodologis terhadap islamisasi sains modern menurut Ziauddin Sardar!",
-                options: [
-                    "A. Perlunya dewesternisasi ilmu melalui epistemologi tawhidi dan etika Islam, bukan hanya pelabelan syariah.",
-                    "B. Islamisasi sains berarti menolak semua teori Barat.",
-                    "C. Sains modern sudah islami secara inherent.",
-                    "D. Tidak mungkin mengislamkan sains.",
-                    "E. Sardar menolak semua bentuk sains kontemporer."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A merangkum proposal Sardar tentang rekonstruksi epistemologi sains."
-            },
-            {
-                question: "Analisis dampak sosial-media terhadap penyebaran paham takfiri di kalangan pemuda Muslim perkotaan!",
-                options: [
-                    "A. Algoritma echo chamber memperkuat radikalisasi diam-diam, berdasarkan studi PNAS 2018 tentang filter bubble digital.",
-                    "B. Media sosial tidak berpengaruh pada radikalisasi.",
-                    "C. Semua konten keagamaan di media sosial bersifat moderat.",
-                    "D. Pemuda perkotaan kebal terhadap paham takfiri.",
-                    "E. Tidak ada korelasi antara media sosial dan pemikiran keagamaan."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A didukung penelitian mutakhir tentang mekanisme radikalisasi digital."
-            },
-            {
-                question: "Telaah kritis terhadap gerakan hijrah fenomenal di Indonesia ditinjau dari konsep al-wala' wal bara'!",
-                options: [
-                    "A. Hijrah positif jika meningkatkan taqwa, negatif jika memicu eksklusivisme sosial, menurut analisis Haidlir Almar 2022.",
-                    "B. Semua gerakan hijrah pasti salah.",
-                    "C. Konsep al-wala' wal bara' tidak relevan dengan hijrah.",
-                    "D. Hijrah harus berarti mengisolasi diri dari masyarakat umum.",
-                    "E. Tidak ada contoh hijrah yang sukses."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memberikan evaluasi berimbang dengan kerangka konseptual yang valid."
-            },
-            {
-                question: "Studi kasus kontroversi bank syariah di Eropa ditinjau dari teori darurah (kebutuhan mendesak)!",
-                options: [
-                    "A. Beberapa bank mengkompromikan prinsip untuk adaptasi regulasi lokal, memicu debat tentang batas darurah menurut ECJ Case C-539/19.",
-                    "B. Semua bank syariah di Eropa fully compliant.",
-                    "C. Tidak ada tantangan khusus untuk bank syariah di Eropa.",
-                    "D. Teori darurah membolehkan semua bentuk riba di Barat.",
-                    "E. Bank syariah dilarang sama sekali di Eropa."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A mengangkat dilema praktis dengan merujuk yurisprudensi terkini."
-            },
-            {
-                question: "Perbandingan konsep pendidikan karakter dalam pesantren salaf vs madrasah reformis!",
-                options: [
-                    "A. Pesantren tekankan adab melalui sorogan, madrasah kembangkan critical thinking via kurikulum terintegrasi, menurut penelitian Azra 2015.",
-                    "B. Tidak ada perbedaan antara kedua model.",
-                    "C. Pesantren salaf tidak mengajarkan karakter.",
-                    "D. Madrasah reformis tolak semua nilai tradisional.",
-                    "E. Hanya madrasah yang relevan di era modern."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A membandingkan keunggulan masing-masing model secara akademik."
-            },
-            {
-                question: "Analisis semiotik terhadap representasi jihad dalam film The Message (1976) vs serial Kingdom of Heaven!",
-                options: [
-                    "A. The Message gunakan simbol-simbol damai, Kingdom of Heaven lebih ambigu dengan narasi perang salib kompleks.",
-                    "B. Keduanya menggambarkan jihad sebagai terorisme.",
-                    "C. Tidak ada perbedaan signifikan antara kedua film.",
-                    "D. Film tidak boleh mengangkat tema jihad.",
-                    "E. Kingdom of Heaven adalah propaganda Islam."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menunjukkan pemahaman mendalam tentang analisis media dan teologi."
-            },
-            {
-                question: "Evaluasi kritis terhadap praktik sertifikasi halal global ditinjau dari teori siyasah syar'iyyah!",
-                options: [
-                    "A. Sertifikasi wajib untuk melindungi konsumen tetapi jangan sampai menjadi alat proteksionisme, sesuai fatwa MUI No.80/2018.",
-                    "B. Sertifikasi halal tidak diperlukan sama sekali.",
-                    "C. Hanya produk Muslim yang perlu sertifikasi.",
-                    "D. Semua produk non-Muslim otomatis haram.",
-                    "E. Sertifikasi halal bertentangan dengan syariah."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menyeimbangkan antara idealisme syariah dan realitas geopolitik ekonomi."
-            },
-            // Soal 21-30
-            {
-                question: "Kritik historis terhadap gerakan pembaruan Islam Muhammad Abduh dan pengaruhnya terhadap modernisme Islam di Asia Tenggara!",
-                options: [
-                    "A. Abduh perkenalkan rasionalisasi tafsir yang mempengaruhi Kaum Muda di Minangkabau, tetapi ditolak oleh tradisionalis pesantren.",
-                    "B. Abduh tidak berpengaruh di luar Mesir.",
-                    "C. Semua ulama Asia Tenggara menolak pemikiran Abduh.",
-                    "D. Modernisme Islam identik dengan westernisasi.",
-                    "E. Pembaruan Islam hanya terjadi di Timur Tengah."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menunjukkan tracing pengaruh intelektual lintas kawasan secara akurat."
-            },
-            {
-                question: "Analisis komparatif zakat profesi menurut Yusuf Qaradawi vs pandangan ulama Saudi kontemporer!",
-                options: [
-                    "A. Qaradawi wajibkan berdasarkan qiyas pada hasil pertanian, ulama Saudi tolak karena tidak ada nash spesifik.",
-                    "B. Keduanya sepakat tentang kewajiban zakat profesi.",
-                    "C. Zakat profesi haram menurut semua mazhab.",
-                    "D. Hanya berlaku untuk dokter dan pengacara.",
-                    "E. Ulama Saudi mendukung zakat profesi tanpa syarat."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memetakan perbedaan pendapat berdasarkan metodologi istinbath yang berbeda."
-            },
-            {
-                question: "Studi kritis tentang relasi Islam dan demokrasi dalam pemikiran Rachid Ghannouchi!",
-                options: [
-                    "A. Ghannouchi usung konsep 'musyarakat madani' yang kompatibel dengan demokrasi selama tidak bertentangan maqashid syariah.",
-                    "B. Islam tidak mungkin berdamai dengan demokrasi.",
-                    "C. Ghannouchi menolak semua bentuk pemilu.",
-                    "D. Demokrasi harus sepenuhnya tunduk pada syariah formal.",
-                    "E. Tidak ada pemikir Muslim yang mendukung demokrasi."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A merangkum sintesis kreatif Ghannouchi antara nilai Islam dan politik modern."
-            },
-            {
-                question: "Deconstruct narasi sejarah Perang Salib dari perspektif Ibn al-Athir vs historiografi Barat kontemporer!",
-                options: [
-                    "A. Ibn al-Athir sajikan sebagai pertahanan Islam, sejarawan Barat seperti Tyerman tekankan aspek kolonialisme Kristen.",
-                    "B. Kedua perspektif identik dalam narasinya.",
-                    "C. Hanya versi Muslim yang akurat.",
-                    "D. Perang Salib tidak pernah terjadi secara faktual.",
-                    "E. Historiografi Barat mengakui kesalahan total Tentara Salib."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menunjukkan pemahaman multi-perspektif dalam penulisan sejarah."
-            },
-            {
-                question: "Evaluasi praktik arbitrase syariah di Indonesia berdasarkan UU No.30/1999 dan Kompilasi Hukum Ekonomi Syariah!",
-                options: [
-                    "A. Arbitrase efektif untuk sengketa bisnis syariah tetapi masih kurang dimanfaatkan, perlu sosialisasi seperti kasus BANI Syariah 2021.",
-                    "B. Arbitrase syariah tidak diakui oleh hukum Indonesia.",
-                    "C. Semua sengketa harus diselesaikan di pengadilan agama.",
-                    "D. KHES hanya berlaku untuk pernikahan.",
-                    "E. UU No.30/1999 melarang arbitrase syariah."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memberikan penilaian realistis dengan contoh implementasi."
-            },
-            {
-                question: "Analisis kontroversi penggunaan CRISPR-Cas9 dalam editing gen manusia ditinjau dari konsep istihsan dan maslahah mursalah!",
-                options: [
-                    "A. Boleh untuk terapi penyakit genetik tetapi haram untuk enhancement, berdasarkan fatwa Dar al-Ifta Mesir No.43/2020.",
-                    "B. Semua bentuk editing gen mutlak haram.",
-                    "C. CRISPR boleh digunakan tanpa batasan etika.",
-                    "D. Istihsan tidak relevan untuk isu sains modern.",
-                    "E. Tidak ada pandangan ulama tentang bioteknologi."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menunjukkan pemahaman kompleksitas bioetika Islam kontemporer."
-            },
-            {
-                question: "Studi komparatif tentang konsep kenabian dalam filsafat Ibn Sina dan Al-Ghazali!",
-                options: [
-                    "A. Ibn Sina anggap nabi sebagai 'akal aktif sempurna', Al-Ghazali tolak filosofisasi kenabian dan tekankan wahyu.",
-                    "B. Keduanya sepakat nabi hanya politisi ulung.",
-                    "C. Konsep kenabian tidak penting dalam filsafat Islam.",
-                    "D. Al-Ghazali mendukung seluruhnya pandangan Ibn Sina.",
-                    "E. Nabi hanyalah mitos menurut kedua filsuf."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memetakan perbedaan paradigmatik antara filosof dan teolog."
-            },
-            {
-                question: "Kritik terhadap implementasi ekonomi syariah di Malaysia dari perspektif maqashid syariah Muhammad Tahir al-Azhari!",
-                options: [
-                    "A. Sukses secara makro tetapi masih ada ketimpangan distribusi, perlu penguatan aspek keadilan (al-'adl) sebagaimana dikritik ISRA 2019 Report.",
-                    "B. Malaysia gagal total menerapkan ekonomi syariah.",
-                    "C. Semua produk keuangan Malaysia fully syariah compliant.",
-                    "D. Maqashid syariah tidak berlaku untuk ekonomi modern.",
-                    "E. Tidak ada kelemahan dalam model Malaysia."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memberikan penilaian objektif dengan merujuk penelitian otoritatif."
-            },
-            {
-                question: "Analisis perkembangan tafsir tematik (maudhu'i) di Indonesia era reformasi dengan studi kasus Tafsir Al-Misbah!",
-                options: [
-                    "A. Tafsir tematik menjawab isu aktual dengan pendekatan kontekstual, seperti Quraish Shihab bahas feminisme dalam QS. An-Nisa.",
-                    "B. Tafsir tematik dilarang di Indonesia.",
-                    "C. Hanya tafsir klasik yang valid.",
-                    "D. Tafsir Al-Misbah bersifat literal semata.",
-                    "E. Tidak ada perkembangan tafsir pasca reformasi."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A menunjukkan pemahaman dinamika penafsiran kontemporer di Indonesia."
-            },
-            {
-                question: "Evaluasi kritis terhadap gerakan Islamisasi pengetahuan di Turki era Erdogan berdasarkan teori Mohammed Arkoun!",
-                options: [
-                    "A. Ada upaya sistematis tetapi terjebak politisasi, belum mencapai dekonstruksi epistemologis sebagaimana diusung Arkoun.",
-                    "B. Turki sepenuhnya gagal mengislamkan pengetahuan.",
-                    "C. Erdogan menolak semua bentuk sains Barat.",
-                    "D. Islamisasi pengetahuan sudah sempurna di Turki.",
-                    "E. Mohammed Arkoun mendukung semua kebijakan Erdogan."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memberikan analisis berimbang dengan kerangka teori kritis."
-            },
-            {
-                question: "Proyeksi masa depan fiqh minoritas Muslim (fiqh al-aqalliyyat) di Eropa berdasarkan fatwa European Council for Fatwa and Research!",
-                options: [
-                    "A. Akan berkembang dengan pendekatan darurah dan maslahah, seperti fatwa tentang pembangunan masjid dengan arsitektur lokal.",
-                    "B. Fiqh minoritas tidak diperlukan di Eropa.",
-                    "C. Muslim Eropa harus sepenuhnya mengikuti fiqh negara asal.",
-                    "D. Tidak ada adaptasi syariah dalam konteks minoritas.",
-                    "E. ECFR menolak semua bentuk ijtihad kontemporer."
-                ],
-                correctAnswer: 0,
-                explanation: "Jawaban A memprediksi tren dengan merujuk perkembangan fatwa mutakhir."
-            }
+                        question: "Perhatikan hadis berikut: 'Innamal a'mālu binniyyāt...' (HR. Bukhari-Muslim). Kandungan utama hadis tersebut adalah tentang...",
+                        options: [
+                            "A. Keutamaan niat dalam beramal",
+                            "B. Kewajiban ikhlas dalam beribadah",
+                            "C. Larangan riya' dalam beramal",
+                            "D. Pentingnya ilmu sebelum beramal",
+                            "E. Semua jawaban benar"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Hadis tentang niat ini mengandung semua poin yang disebutkan dalam pilihan jawaban. Niat adalah dasar diterimanya amal, harus ikhlas karena Allah, tidak boleh riya', dan ilmu tentang cara beramal yang benar harus didahulukan sebelum beramal."
+                    },
+                    {
+                        question: "Perhatikan pernyataan tentang hukum waris Islam: 1) Anak laki-laki mendapat bagian lebih besar dari anak perempuan, 2) Suami mendapat 1/2 jika istri tidak meninggalkan anak, 3) Ibu mendapat 1/6 jika ada anak atau cucu, 4) Saudara laki-laki seibu mendapat 1/6. Pernyataan yang benar adalah...",
+                        options: [
+                            "A. 1 dan 2",
+                            "B. 1 dan 3",
+                            "C. 2 dan 3",
+                            "D. 2 dan 4",
+                            "E. 3 dan 4"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Pernyataan yang benar adalah 1) Anak laki-laki mendapat bagian 2x anak perempuan (QS. An-Nisa: 11), dan 3) Ibu mendapat 1/6 jika ada anak atau cucu (QS. An-Nisa: 11). Pernyataan 2 salah karena suami mendapat 1/2 jika istri tidak meninggalkan anak atau cucu, dan 4 salah karena saudara laki-laki seibu mendapat 1/6 jika hanya satu orang."
+                    },
+                    {
+                        question: "Dalam Islam, transaksi ekonomi yang dilarang adalah...",
+                        options: [
+                            "A. Jual beli dengan sistem tunai",
+                            "B. Kerjasama bagi hasil (mudharabah)",
+                            "C. Sewa menyewa dengan akad jelas",
+                            "D. Riba dalam pinjaman",
+                            "E. Jual beli dengan sistem kredit"
+                        ],
+                        correctAnswer: 3,
+                        explanation: "Riba dalam segala bentuknya dilarang dalam Islam (QS. Al-Baqarah: 275). Transaksi lain seperti jual beli tunai/kredit, mudharabah, dan sewa menyewa yang memenuhi syarat diperbolehkan dalam Islam."
+                    },
+                    {
+                        question: "Perhatikan pernyataan tentang khulafaur rasyidin: 1) Abu Bakar Ash-Shiddiq, 2) Umar bin Khattab, 3) Utsman bin Affan, 4) Ali bin Abi Thalib. Urutan yang benar masa kekhalifahan mereka adalah...",
+                        options: [
+                            "A. 1-2-3-4",
+                            "B. 1-3-2-4",
+                            "C. 2-1-3-4",
+                            "D. 2-3-1-4",
+                            "E. 3-1-2-4"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Urutan khulafaur rasyidin adalah: 1) Abu Bakar Ash-Shiddiq (11-13 H/632-634 M), 2) Umar bin Khattab (13-23 H/634-644 M), 3) Utsman bin Affan (23-35 H/644-656 M), 4) Ali bin Abi Thalib (35-40 H/656-661 M)."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk syarat sah shalat adalah...",
+                        options: [
+                            "A. Menutup aurat",
+                            "B. Menghadap kiblat",
+                            "C. Suci dari hadas kecil dan besar",
+                            "D. Masuk waktu shalat",
+                            "E. Semua jawaban benar"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Semua pilihan di atas termasuk syarat sah shalat. Syarat sah shalat lainnya: 1) Mengetahui tata caranya, 2) Suci badan, pakaian dan tempat dari najis, 3) Tidak ada yang membatalkan shalat."
+                    },
+                    {
+                        question: "Perhatikan pernyataan tentang zakat: 1) Zakat fitrah wajib bagi setiap muslim, 2) Zakat mal wajib jika mencapai nishab dan haul, 3) Nishab zakat emas adalah 85 gram, 4) Zakat profesi hukumnya wajib. Pernyataan yang benar adalah...",
+                        options: [
+                            "A. 1 dan 2",
+                            "B. 1 dan 3",
+                            "C. 2 dan 3",
+                            "D. 2 dan 4",
+                            "E. 3 dan 4"
+                        ],
+                        correctAnswer: 0,
+                        explanation: "Pernyataan yang benar adalah 1) Zakat fitrah wajib bagi setiap muslim yang mampu, 2) Zakat mal wajib jika mencapai nishab dan haul. Nishab zakat emas adalah 85 gram emas murni, tetapi ini termasuk zakat mal. Zakat profesi masih menjadi perbedaan pendapat di kalangan ulama."
+                    },
+                    {
+                        question: "Dalam Islam, tujuan utama ibadah haji adalah...",
+                        options: [
+                            "A. Menghapus dosa-dosa",
+                            "B. Mempererat persaudaraan muslim",
+                            "C. Mengunjungi tempat-tempat bersejarah",
+                            "D. Memenuhi panggilan Allah",
+                            "E. Semua jawaban benar"
+                        ],
+                        correctAnswer: 3,
+                        explanation: "Tujuan utama ibadah haji adalah memenuhi panggilan Allah (QS. Al-Hajj: 27). Manfaat lain seperti penghapusan dosa, persaudaraan, dan ziarah adalah efek samping dari pelaksanaan haji."
+                    },
+                    {
+                        question: "Perhatikan ayat berikut: 'Wa lā taqtulū anfusakum innallāha kāna bikum raḥīmā' (QS. An-Nisa: 29). Kandungan utama ayat tersebut adalah...",
+                        options: [
+                            "A. Larangan membunuh diri sendiri",
+                            "B. Perintah menjaga nyawa",
+                            "C. Larangan bunuh diri dan pembunuhan",
+                            "D. Keharaman bunuh diri dalam Islam",
+                            "E. Semua jawaban benar"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Ayat tersebut berarti 'Dan janganlah kamu membunuh dirimu sendiri. Sesungguhnya Allah Maha Penyayang kepadamu' (QS. An-Nisa: 29). Kandungannya mencakup semua poin dalam pilihan jawaban."
+                    },
+                    {
+                        question: "Berikut ini yang termasuk contoh muamalah yang sesuai syariah adalah...",
+                        options: [
+                            "A. Jual beli dengan sistem riba",
+                            "B. Kerjasama bagi hasil (mudharabah)",
+                            "C. Judi dalam bentuk apapun",
+                            "D. Transaksi yang mengandung gharar (ketidakjelasan)",
+                            "E. Menjual barang haram"
+                        ],
+                        correctAnswer: 1,
+                        explanation: "Kerjasama bagi hasil (mudharabah) adalah contoh muamalah yang sesuai syariah. Sistem riba, judi, gharar, dan jual beli barang haram dilarang dalam Islam."
+                    },
+                    {
+                        question: "Perhatikan pernyataan tentang jihad: 1) Jihad bisa dengan harta, 2) Jihad bisa dengan lisan, 3) Jihad bisa dengan tangan, 4) Jihad bisa dengan hati. Pernyataan yang benar adalah...",
+                        options: [
+                            "A. 1 dan 2",
+                            "B. 1 dan 3",
+                            "C. 2 dan 3",
+                            "D. 3 dan 4",
+                            "E. Semua benar"
+                        ],
+                        correctAnswer: 4,
+                        explanation: "Semua pernyataan benar. Jihad dalam Islam memiliki makna yang luas, tidak hanya perang. Nabi Muhammad SAW bersabda: 'Jihad yang paling utama adalah menyampaikan kebenaran di hadapan penguasa yang zalim' (HR. Abu Daud)."
+                    }
                 ]
             }
         };
