@@ -1469,10 +1469,10 @@
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
         // Store participants data
-        let participantsData = JSON.parse(localStorage.getItem('participantsData')) || [];
+        let participantsData = JSON.parse(localStorage.getItem('pergunuParticipantsData')) || [];
         
         // Store admin settings
-        let adminSettings = JSON.parse(localStorage.getItem('adminSettings')) || {
+        let adminSettings = JSON.parse(localStorage.getItem('pergunuAdminSettings')) || {
             loginCode: DEFAULT_LOGIN_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
             examDuration: 120,
@@ -2215,11 +2215,11 @@
         }
         
         function saveParticipantsData() {
-            localStorage.setItem('participantsData', JSON.stringify(participantsData));
+            localStorage.setItem('pergunuParticipantsData', JSON.stringify(participantsData));
         }
         
         function saveAdminSettings() {
-            localStorage.setItem('adminSettings', JSON.stringify(adminSettings));
+            localStorage.setItem('pergunuAdminSettings', JSON.stringify(adminSettings));
         }
         
         function handleLogin() {
