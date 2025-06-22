@@ -2705,25 +2705,40 @@
                     correctAnswer: q.correctAnswer,
                     explanation: q.explanation
                 })),
-                deviceInfo: participantData.deviceInfo
+                deviceInfo: participantData.deviceInfo,
+                totalQuestions: questions.length,
+                correctAnswers: examData.correct,
+                wrongAnswers: examData.wrong,
+                unanswered: examData.unanswered
             };
             
             // Simpan ke Google Sheets dan localStorage
             try {
+                // First try to save to Google Sheets
                 const saveResult = await saveToGoogleSheets(participantRecord);
+                
                 if (saveResult.success) {
+                    // If successful, save to localStorage as well
                     participantsData.push(participantRecord);
                     saveParticipantsData();
+                    
+                    // Show results
+                    showResults(participantRecord, certificateCode);
                 } else {
-                    // Fallback to localStorage if Google Sheets fails
+                    // If Google Sheets fails, fallback to localStorage
+                    console.error('Failed to save to Google Sheets:', saveResult.message);
                     saveToLocalStorage(participantRecord);
+                    showResults(participantRecord, certificateCode);
                 }
             } catch (error) {
                 console.error('Error saving to Google Sheets:', error);
                 // Fallback to localStorage
                 saveToLocalStorage(participantRecord);
+                showResults(participantRecord, certificateCode);
             }
-            
+        }
+        
+        function showResults(participantRecord, certificateCode) {
             // Hide exam screen with slide out animation
             document.getElementById('exam-screen').classList.add('slide-out');
             
@@ -2735,7 +2750,7 @@
                 currentScreen = 'results';
                 
                 // Display results
-                displayResults();
+                displayResults(participantRecord);
                 
                 // Generate certificate
                 generateCertificate(certificateCode);
@@ -2748,7 +2763,7 @@
                 certificateSound.play().catch(e => console.log("Certificate sound prevented:", e));
             }, 500);
         }
-        
+
         // Fungsi untuk mengirim data ke Google Sheets
         async function saveToGoogleSheets(participantData) {
             const dataToSend = {
@@ -2766,10 +2781,10 @@
                     certificateCode: participantData.certificateCode,
                     examDate: participantData.examDate,
                     deviceType: participantData.deviceInfo?.deviceType || 'Unknown',
-                    totalQuestions: questions.length,
-                    correctAnswers: examData.correct,
-                    wrongAnswers: examData.wrong,
-                    unanswered: examData.unanswered
+                    totalQuestions: participantData.totalQuestions,
+                    correctAnswers: participantData.correctAnswers,
+                    wrongAnswers: participantData.wrongAnswers,
+                    unanswered: participantData.unanswered
                 }
             };
 
@@ -2807,19 +2822,19 @@
             saveParticipantsData();
         }
             
-        function displayResults() {
-            document.getElementById('result-name').textContent = participantData.fullname;
+        function displayResults(participantRecord) {
+            document.getElementById('result-name').textContent = participantRecord.fullname;
             document.getElementById('result-status').textContent = 'Pelajar';
-            document.getElementById('result-level').textContent = participantData.level || '-';
-            document.getElementById('result-grade').textContent = participantData.grade ? `Kelas ${participantData.grade}` : '-';
-            document.getElementById('result-subject').textContent = participantData.subject || '-';
-            document.getElementById('total-questions').textContent = questions.length;
-            document.getElementById('correct-answers').textContent = examData.correct;
-            document.getElementById('wrong-answers').textContent = examData.wrong;
-            document.getElementById('unanswered-questions').textContent = examData.unanswered;
+            document.getElementById('result-level').textContent = participantRecord.level || '-';
+            document.getElementById('result-grade').textContent = participantRecord.grade ? `Kelas ${participantRecord.grade}` : '-';
+            document.getElementById('result-subject').textContent = participantRecord.subject || '-';
+            document.getElementById('total-questions').textContent = participantRecord.totalQuestions;
+            document.getElementById('correct-answers').textContent = participantRecord.correctAnswers;
+            document.getElementById('wrong-answers').textContent = participantRecord.wrongAnswers;
+            document.getElementById('unanswered-questions').textContent = participantRecord.unanswered;
             
             // Calculate score (percentage)
-            const score = Math.round((examData.correct / questions.length) * 100);
+            const score = Math.round((participantRecord.correctAnswers / participantRecord.totalQuestions) * 100);
             document.getElementById('exam-score').textContent = `${score}%`;
         }
         
