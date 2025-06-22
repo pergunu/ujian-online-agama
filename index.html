@@ -1468,10 +1468,10 @@
         const DEFAULT_LOGIN_CODE = '12345';
         const DEFAULT_ADMIN_PANEL_CODE = '65614222';
         
-        // Store participants data
+        // Store participants data in localStorage
         let participantsData = JSON.parse(localStorage.getItem('pergunuParticipantsData')) || [];
         
-        // Store admin settings
+        // Store admin settings in localStorage
         let adminSettings = JSON.parse(localStorage.getItem('pergunuAdminSettings')) || {
             loginCode: DEFAULT_LOGIN_CODE,
             adminCode: DEFAULT_ADMIN_PANEL_CODE,
