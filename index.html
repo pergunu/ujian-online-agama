@@ -1456,6 +1456,107 @@
         let examTimeLeft = 120 * 60; // 120 minutes in seconds
         let selectedParticipants = [];
         let questionOrder = []; // Untuk menyimpan urutan soal yang diacak
+
+        // Tambahkan variabel global untuk URL Google Apps Script
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuh1M0pS64v5e_HYGafcG7CD8RwCEf4FVroKnOT1DujxTdCnn6zTBeQvSwgmenspgN/exec'; // Ganti dengan URL Anda
+
+// Fungsi untuk mengirim data ke Google Sheets
+async function saveToGoogleSheets(participantData, examData, certificateCode) {
+    const dataToSend = {
+        ...participantData,
+        totalQuestions: questions.length,
+        correctAnswers: examData.correct,
+        wrongAnswers: examData.wrong,
+        unanswered: examData.unanswered,
+        score: Math.round((examData.correct / questions.length) * 100),
+        certificateCode: certificateCode,
+        examDate: new Date().toISOString()
+    };
+
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToSend)
+        });
+
+        const result = await response.json();
+        
+        if (!result.success) {
+            console.error('Gagal menyimpan ke Google Sheets:', result.message);
+            // Tetap simpan ke localStorage sebagai fallback
+            saveToLocalStorage(participantData, examData, certificateCode);
+        }
+        
+        return result;
+    } catch (error) {
+        console.error('Error mengirim data ke Google Sheets:', error);
+        // Tetap simpan ke localStorage sebagai fallback
+        saveToLocalStorage(participantData, examData, certificateCode);
+        return { success: false, message: error.message };
+    }
+}
+
+// Modifikasi fungsi finishExam untuk mengirim data ke Google Sheets
+async function finishExam() {
+    clearInterval(examTimer);
+    
+    // Calculate unanswered questions
+    examData.unanswered = examData.answers.filter(answer => answer === null).length;
+    
+    // Generate certificate code
+    const certificateCode = generateUniqueCode();
+    
+    // Calculate score
+    const score = Math.round((examData.correct / questions.length) * 100);
+    
+    // Add participant to data store
+    const participantRecord = {
+        ...participantData,
+        score: score,
+        examDate: new Date().toISOString(),
+        certificateCode: certificateCode,
+        answers: examData.answers,
+        questions: questions.map((q, i) => ({
+            question: q.question,
+            selectedAnswer: examData.answers[i],
+            correctAnswer: q.correctAnswer,
+            explanation: q.explanation
+        })),
+        deviceInfo: participantData.deviceInfo
+    };
+    
+    // Simpan ke Google Sheets dan localStorage
+    await saveToGoogleSheets(participantData, examData, certificateCode);
+    participantsData.push(participantRecord);
+    saveParticipantsData();
+    
+    // Hide exam screen with slide out animation
+    document.getElementById('exam-screen').classList.add('slide-out');
+    
+    // Show results screen after animation completes
+    setTimeout(() => {
+        document.getElementById('exam-screen').style.display = 'none';
+        document.getElementById('results-screen').style.display = 'block';
+        document.getElementById('results-screen').classList.add('slide-in');
+        currentScreen = 'results';
+        
+        // Display results
+        displayResults();
+        
+        // Generate certificate
+        generateCertificate(certificateCode);
+        
+        // Show celebration particles
+        showCelebration();
+        
+        // Play certificate sound (applause)
+        certificateSound.currentTime = 0;
+        certificateSound.play().catch(e => console.log("Certificate sound prevented:", e));
+    }, 500);
+}
         
         // Audio elements
         const buttonSound = document.getElementById('button-sound');
@@ -2677,14 +2778,102 @@
             }
         }
         
-        function finishExam() {
-            clearInterval(examTimer);
-            
-            // Calculate unanswered questions
-            examData.unanswered = examData.answers.filter(answer => answer === null).length;
-            
-            // Generate certificate code
-            const certificateCode = generateUniqueCode();
+       // Fungsi untuk mengirim data ke Google Sheets
+async function saveToGoogleSheets(participantData, examData, certificateCode) {
+    const dataToSend = {
+        ...participantData,
+        totalQuestions: questions.length,
+        correctAnswers: examData.correct,
+        wrongAnswers: examData.wrong,
+        unanswered: examData.unanswered,
+        score: Math.round((examData.correct / questions.length) * 100),
+        certificateCode: certificateCode,
+        examDate: new Date().toISOString()
+    };
+
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToSend)
+        });
+
+        const result = await response.json();
+        
+        if (!result.success) {
+            console.error('Gagal menyimpan ke Google Sheets:', result.message);
+            // Tetap simpan ke localStorage sebagai fallback
+            saveToLocalStorage(participantData, examData, certificateCode);
+        }
+        
+        return result;
+    } catch (error) {
+        console.error('Error mengirim data ke Google Sheets:', error);
+        // Tetap simpan ke localStorage sebagai fallback
+        saveToLocalStorage(participantData, examData, certificateCode);
+        return { success: false, message: error.message };
+    }
+}
+
+async function finishExam() {
+    clearInterval(examTimer);
+    
+    // Calculate unanswered questions
+    examData.unanswered = examData.answers.filter(answer => answer === null).length;
+    
+    // Generate certificate code
+    const certificateCode = generateUniqueCode();
+    
+    // Calculate score
+    const score = Math.round((examData.correct / questions.length) * 100);
+    
+    // Add participant to data store
+    const participantRecord = {
+        ...participantData,
+        score: score,
+        examDate: new Date().toISOString(),
+        certificateCode: certificateCode,
+        answers: examData.answers,
+        questions: questions.map((q, i) => ({
+            question: q.question,
+            selectedAnswer: examData.answers[i],
+            correctAnswer: q.correctAnswer,
+            explanation: q.explanation
+        })),
+        deviceInfo: participantData.deviceInfo
+    };
+    
+    // Simpan ke Google Sheets dan localStorage
+    await saveToGoogleSheets(participantData, examData, certificateCode);
+    participantsData.push(participantRecord);
+    saveParticipantsData();
+    
+    // Hide exam screen with slide out animation
+    document.getElementById('exam-screen').classList.add('slide-out');
+    
+    // Show results screen after animation completes
+    setTimeout(() => {
+        document.getElementById('exam-screen').style.display = 'none';
+        document.getElementById('results-screen').style.display = 'block';
+        document.getElementById('results-screen').classList.add('slide-in');
+        currentScreen = 'results';
+        
+        // Display results
+        displayResults();
+        
+        // Generate certificate
+        generateCertificate(certificateCode);
+        
+        // Show celebration particles
+        showCelebration();
+        
+        // Play certificate sound (applause)
+        certificateSound.currentTime = 0;
+        certificateSound.play().catch(e => console.log("Certificate sound prevented:", e));
+    }, 500);
+}
             
             // Calculate score
             const score = Math.round((examData.correct / questions.length) * 100);
