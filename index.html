@@ -1302,6 +1302,9 @@
                             <button id="export-json-btn" class="btn btn-info">
                                 <i class="fas fa-file-code"></i> Export to JSON
                             </button>
+                            <button id="export-excel-btn" class="btn btn-success">
+                                <i class="fas fa-file-excel"></i> Export to Excel
+                            </button>
                         </div>
                     </div>
                     
@@ -1440,6 +1443,7 @@
     <audio id="opening-sound" src="https://github.com/pergunu/ujian-online/raw/main/assets/audio/opening.mp3" preload="auto"></audio>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         // Global variables
         let currentScreen = 'welcome';
@@ -2171,6 +2175,7 @@
             document.getElementById('validate-certificate-btn').addEventListener('click', validateCertificate);
             document.getElementById('export-csv-btn').addEventListener('click', exportToCSV);
             document.getElementById('export-json-btn').addEventListener('click', exportToJSON);
+            document.getElementById('export-excel-btn').addEventListener('click', exportToExcel);
             
             // Search functionality
             document.getElementById('participant-search').addEventListener('input', searchParticipants);
@@ -2413,7 +2418,8 @@
                 subject: document.querySelector('input[name="subject"]:checked')?.value,
                 school: document.getElementById('school-name')?.value.trim(),
                 studentId: document.getElementById('student-id')?.value.trim(),
-                examDate: new Date().toISOString()
+                examDate: new Date().toISOString(),
+                deviceInfo: getDeviceInfo()
             };
             
             // Load questions based on level - hanya Agama Islam
@@ -2460,6 +2466,27 @@
                 // Load first question
                 loadQuestion(0);
             }, 500);
+        }
+        
+        // Fungsi untuk mendapatkan informasi perangkat
+        function getDeviceInfo() {
+            const userAgent = navigator.userAgent;
+            let deviceType = 'Desktop';
+            
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+                deviceType = 'Mobile';
+            } else if (/Tablet|iPad/i.test(userAgent)) {
+                deviceType = 'Tablet';
+            }
+            
+            return {
+                deviceType: deviceType,
+                userAgent: userAgent,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                platform: navigator.platform,
+                language: navigator.language
+            };
         }
         
         // Fungsi untuk mengacak array (Fisher-Yates algorithm)
@@ -2674,7 +2701,8 @@
                     selectedAnswer: examData.answers[i],
                     correctAnswer: q.correctAnswer,
                     explanation: q.explanation
-                }))
+                })),
+                deviceInfo: participantData.deviceInfo
             };
             
             participantsData.push(participantRecord);
@@ -3199,6 +3227,7 @@
                     <p>Mata Ujian: ${participant.subject || '-'}</p>
                     <p>Nilai: ${participant.score}%</p>
                     <p>Tanggal Ujian: ${new Date(participant.examDate).toLocaleDateString('id-ID')}</p>
+                    <p>Perangkat: ${participant.deviceInfo?.deviceType || 'Tidak diketahui'}</p>
                 `;
                 validationResult.style.display = 'block';
             } else {
@@ -3271,13 +3300,14 @@
             }
             
             // Create CSV header
-            let csv = 'Nama,NIS,Sekolah,Tingkat,Kelas,Subject,Nilai,Kode Sertifikat,Tanggal Ujian\n';
+            let csv = 'Nama,NIS,Sekolah,Tingkat,Kelas,Subject,Nilai,Kode Sertifikat,Tanggal Ujian,Jenis Perangkat\n';
             
             // Add data rows
             participantsData.forEach(participant => {
                 csv += `"${participant.fullname}","${participant.studentId || ''}","${participant.school || ''}",`;
                 csv += `"${participant.level || ''}","${participant.grade || ''}","${participant.subject || ''}",`;
-                csv += `"${participant.score}","${participant.certificateCode || ''}","${new Date(participant.examDate).toLocaleString('id-ID')}"\n`;
+                csv += `"${participant.score}","${participant.certificateCode || ''}","${new Date(participant.examDate).toLocaleString('id-ID')}",`;
+                csv += `"${participant.deviceInfo?.deviceType || 'Tidak diketahui'}"\n`;
             });
             
             // Create download link
@@ -3311,6 +3341,43 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+        
+        function exportToExcel() {
+            if (participantsData.length === 0) {
+                alert('Tidak ada data peserta untuk diekspor');
+                return;
+            }
+            
+            // Prepare data for Excel
+            const excelData = [
+                ['Nama', 'NIS', 'Sekolah', 'Tingkat', 'Kelas', 'Mata Ujian', 'Nilai', 'Kode Sertifikat', 'Tanggal Ujian', 'Jenis Perangkat']
+            ];
+            
+            participantsData.forEach(participant => {
+                excelData.push([
+                    participant.fullname,
+                    participant.studentId || '',
+                    participant.school || '',
+                    participant.level || '',
+                    participant.grade || '',
+                    participant.subject || '',
+                    participant.score,
+                    participant.certificateCode || '',
+                    new Date(participant.examDate).toLocaleString('id-ID'),
+                    participant.deviceInfo?.deviceType || 'Tidak diketahui'
+                ]);
+            });
+            
+            // Create worksheet
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            
+            // Create workbook
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Data Peserta");
+            
+            // Export to Excel file
+            XLSX.writeFile(wb, `data-peserta-${new Date().toISOString().slice(0,10)}.xlsx`);
         }
     </script>
 </body>
