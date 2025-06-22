@@ -2709,9 +2709,20 @@
             };
             
             // Simpan ke Google Sheets dan localStorage
-            await saveToGoogleSheets(participantData, examData, certificateCode);
-            participantsData.push(participantRecord);
-            saveParticipantsData();
+            try {
+                const saveResult = await saveToGoogleSheets(participantRecord);
+                if (saveResult.success) {
+                    participantsData.push(participantRecord);
+                    saveParticipantsData();
+                } else {
+                    // Fallback to localStorage if Google Sheets fails
+                    saveToLocalStorage(participantRecord);
+                }
+            } catch (error) {
+                console.error('Error saving to Google Sheets:', error);
+                // Fallback to localStorage
+                saveToLocalStorage(participantRecord);
+            }
             
             // Hide exam screen with slide out animation
             document.getElementById('exam-screen').classList.add('slide-out');
@@ -2739,16 +2750,27 @@
         }
         
         // Fungsi untuk mengirim data ke Google Sheets
-        async function saveToGoogleSheets(participantData, examData, certificateCode) {
+        async function saveToGoogleSheets(participantData) {
             const dataToSend = {
-                ...participantData,
-                totalQuestions: questions.length,
-                correctAnswers: examData.correct,
-                wrongAnswers: examData.wrong,
-                unanswered: examData.unanswered,
-                score: Math.round((examData.correct / questions.length) * 100),
-                certificateCode: certificateCode,
-                examDate: new Date().toISOString()
+                action: 'saveParticipant',
+                data: {
+                    fullname: participantData.fullname,
+                    status: participantData.status,
+                    purpose: participantData.purpose,
+                    level: participantData.level,
+                    grade: participantData.grade,
+                    subject: participantData.subject,
+                    school: participantData.school,
+                    studentId: participantData.studentId,
+                    score: participantData.score,
+                    certificateCode: participantData.certificateCode,
+                    examDate: participantData.examDate,
+                    deviceType: participantData.deviceInfo?.deviceType || 'Unknown',
+                    totalQuestions: questions.length,
+                    correctAnswers: examData.correct,
+                    wrongAnswers: examData.wrong,
+                    unanswered: examData.unanswered
+                }
             };
 
             try {
@@ -2760,33 +2782,25 @@
                     body: JSON.stringify(dataToSend)
                 });
 
-                const result = await response.json();
-                
-                if (!result.success) {
-                    console.error('Gagal menyimpan ke Google Sheets:', result.message);
-                    // Tetap simpan ke localStorage sebagai fallback
-                    saveToLocalStorage(participantData, examData, certificateCode);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-                
+
+                const result = await response.json();
                 return result;
             } catch (error) {
-                console.error('Error mengirim data ke Google Sheets:', error);
-                // Tetap simpan ke localStorage sebagai fallback
-                saveToLocalStorage(participantData, examData, certificateCode);
-                return { success: false, message: error.message };
+                console.error('Error saving to Google Sheets:', error);
+                throw error;
             }
         }
 
-        function saveToLocalStorage(participantData, examData, certificateCode) {
+        function saveToLocalStorage(participantData) {
             const participantRecord = {
                 ...participantData,
                 totalQuestions: questions.length,
                 correctAnswers: examData.correct,
                 wrongAnswers: examData.wrong,
-                unanswered: examData.unanswered,
-                score: Math.round((examData.correct / questions.length) * 100),
-                certificateCode: certificateCode,
-                examDate: new Date().toISOString()
+                unanswered: examData.unanswered
             };
             
             participantsData.push(participantRecord);
