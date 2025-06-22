@@ -1295,6 +1295,14 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="export-buttons">
+                            <button id="export-csv-btn" class="btn btn-info">
+                                <i class="fas fa-file-csv"></i> Export to CSV
+                            </button>
+                            <button id="export-json-btn" class="btn btn-info">
+                                <i class="fas fa-file-code"></i> Export to JSON
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="admin-section">
@@ -2161,6 +2169,8 @@
             document.getElementById('edit-selected-participants').addEventListener('click', editSelectedParticipants);
             document.getElementById('delete-selected-participants').addEventListener('click', deleteSelectedParticipants);
             document.getElementById('validate-certificate-btn').addEventListener('click', validateCertificate);
+            document.getElementById('export-csv-btn').addEventListener('click', exportToCSV);
+            document.getElementById('export-json-btn').addEventListener('click', exportToJSON);
             
             // Search functionality
             document.getElementById('participant-search').addEventListener('input', searchParticipants);
@@ -2649,14 +2659,25 @@
             // Generate certificate code
             const certificateCode = generateUniqueCode();
             
-            // Add participant to data store
+            // Calculate score
             const score = Math.round((examData.correct / questions.length) * 100);
-            participantsData.push({
+            
+            // Add participant to data store
+            const participantRecord = {
                 ...participantData,
                 score: score,
                 examDate: new Date().toISOString(),
-                certificateCode: certificateCode
-            });
+                certificateCode: certificateCode,
+                answers: examData.answers,
+                questions: questions.map((q, i) => ({
+                    question: q.question,
+                    selectedAnswer: examData.answers[i],
+                    correctAnswer: q.correctAnswer,
+                    explanation: q.explanation
+                }))
+            };
+            
+            participantsData.push(participantRecord);
             saveParticipantsData();
             
             // Hide exam screen with slide out animation
@@ -3241,6 +3262,55 @@
             saveAdminSettings();
             
             alert('Pengaturan berhasil disimpan!');
+        }
+        
+        function exportToCSV() {
+            if (participantsData.length === 0) {
+                alert('Tidak ada data peserta untuk diekspor');
+                return;
+            }
+            
+            // Create CSV header
+            let csv = 'Nama,NIS,Sekolah,Tingkat,Kelas,Subject,Nilai,Kode Sertifikat,Tanggal Ujian\n';
+            
+            // Add data rows
+            participantsData.forEach(participant => {
+                csv += `"${participant.fullname}","${participant.studentId || ''}","${participant.school || ''}",`;
+                csv += `"${participant.level || ''}","${participant.grade || ''}","${participant.subject || ''}",`;
+                csv += `"${participant.score}","${participant.certificateCode || ''}","${new Date(participant.examDate).toLocaleString('id-ID')}"\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `data-peserta-${new Date().toISOString().slice(0,10)}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        function exportToJSON() {
+            if (participantsData.length === 0) {
+                alert('Tidak ada data peserta untuk diekspor');
+                return;
+            }
+            
+            // Create JSON data
+            const jsonData = JSON.stringify(participantsData, null, 2);
+            
+            // Create download link
+            const blob = new Blob([jsonData], { type: 'application/json;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `data-peserta-${new Date().toISOString().slice(0,10)}.json`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
