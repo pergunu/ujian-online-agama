@@ -139,6 +139,7 @@
         /* Form Styles */
         .form-group {
             margin-bottom: 20px;
+            position: relative;
         }
 
         .form-control {
@@ -942,11 +943,53 @@
             color: #a94442;
             border: 1px solid #ebccd1;
         }
+
+        /* Error message styles */
+        .error-message {
+            color: var(--color-error);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Warning notification */
+        .warning-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-warning);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        /* Input error state */
+        .input-error {
+            border-color: var(--color-error) !important;
+            background: rgba(244, 67, 54, 0.1) !important;
+        }
+
+        /* Radio group error */
+        .radio-group-error {
+            outline: 2px solid var(--color-error);
+            border-radius: 8px;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
     <div id="celebration-particles"></div>
+    
+    <!-- Warning notification for incomplete form -->
+    <div class="warning-notification" id="form-warning">
+        <i class="fas fa-exclamation-circle"></i> Harap lengkapi semua data peserta dengan benar sebelum melanjutkan!
+    </div>
     
     <div class="container">
         <!-- Welcome Screen -->
@@ -1000,6 +1043,7 @@
             <div class="form-group">
                 <label for="fullname" class="form-label">Nama Lengkap</label>
                 <input type="text" id="fullname" class="form-control" placeholder="Masukkan nama lengkap" pattern="[A-Za-z ]+" title="Hanya huruf diperbolehkan" required>
+                <div class="error-message" id="fullname-error">Nama lengkap harus diisi dan hanya boleh mengandung huruf</div>
             </div>
             
             <div class="form-group">
@@ -1014,17 +1058,19 @@
             <div id="student-fields">
                 <div class="form-group">
                     <label for="school-name" class="form-label">Nama Sekolah</label>
-                    <input type="text" id="school-name" class="form-control" placeholder="Masukkan nama sekolah">
+                    <input type="text" id="school-name" class="form-control" placeholder="Masukkan nama sekolah" required>
+                    <div class="error-message" id="school-error">Nama sekolah harus diisi</div>
                 </div>
                 
                 <div class="form-group">
                     <label for="student-id" class="form-label">NIS (Nomor Induk Siswa)</label>
                     <input type="text" id="student-id" class="form-control" placeholder="Masukkan NIS" pattern="[0-9]+" title="Hanya angka diperbolehkan" required>
+                    <div class="error-message" id="nis-error">NIS harus diisi dan hanya boleh mengandung angka</div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Tujuan Ikut Ujian</label>
-                    <div class="radio-group">
+                    <div class="radio-group" id="purpose-radio-group">
                         <input type="radio" id="purpose-task" name="purpose" value="Tugas Sekolah" class="radio-option">
                         <label for="purpose-task" class="radio-label">Tugas Sekolah</label>
                         
@@ -1034,11 +1080,12 @@
                         <input type="radio" id="purpose-test" name="purpose" value="Tes dan Belajar" class="radio-option">
                         <label for="purpose-test" class="radio-label">Tes dan Belajar</label>
                     </div>
+                    <div class="error-message" id="purpose-error">Silakan pilih tujuan ikut ujian</div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Tingkat Sekolah</label>
-                    <div class="radio-group">
+                    <div class="radio-group" id="level-radio-group">
                         <input type="radio" id="level-elementary" name="level" value="SD" class="radio-option">
                         <label for="level-elementary" class="radio-label">SD</label>
                         
@@ -1048,6 +1095,7 @@
                         <input type="radio" id="level-senior" name="level" value="SMA/SMK" class="radio-option">
                         <label for="level-senior" class="radio-label">SMA/SMK</label>
                     </div>
+                    <div class="error-message" id="level-error">Silakan pilih tingkat sekolah</div>
                 </div>
             </div>
             
@@ -1058,6 +1106,7 @@
                     <div class="radio-group" id="grade-options">
                         <!-- Options will be populated by JavaScript -->
                     </div>
+                    <div class="error-message" id="grade-error">Silakan pilih kelas</div>
                 </div>
             </div>
             
@@ -1065,10 +1114,11 @@
             <div id="subject-selection" style="display: none;">
                 <div class="form-group">
                     <label class="form-label">Pilih Jenis Ujian</label>
-                    <div class="radio-group">
+                    <div class="radio-group" id="subject-radio-group">
                         <input type="radio" id="subject-religion" name="subject" value="Agama Islam" class="radio-option" checked>
                         <label for="subject-religion" class="radio-label">Agama Islam</label>
                     </div>
+                    <div class="error-message" id="subject-error">Silakan pilih jenis ujian</div>
                 </div>
             </div>
             
@@ -1423,7 +1473,6 @@
         };
 
         // Expanded Question bank with more questions (Agama Islam only)
-        // Anda bisa menambahkan soal sebanyak yang dibutuhkan di sini
         let QUESTION_BANK = {
             'SD': {
                 'Agama Islam': [
@@ -1612,7 +1661,7 @@
                         explanation: "Membantu teman yang kesulitan termasuk akhlak terpuji yang diajarkan dalam Islam. Nabi Muhammad SAW bersabda: 'Allah akan menolong hamba-Nya selama hamba itu menolong saudaranya' (HR. Muslim)."
                     },
                     {
-                        question: "Perhatikan pernyataan berikut tentang rukun Islam: 1) Syahadat, 2) Shalat, 3) Zakat, 4) Puasa, 5) Haji. Urutan yang benar adalah...",
+                        question: "Perhatikan pernyataan tentang rukun Islam: 1) Syahadat, 2) Shalat, 3) Zakat, 4) Puasa, 5) Haji. Urutan yang benar adalah...",
                         options: [
                             "A. 1-2-3-4-5",
                             "B. 1-3-2-4-5",
@@ -2027,7 +2076,7 @@
                 radio.addEventListener('change', showGradeSelection);
             });
             
-            document.getElementById('save-participant-btn').addEventListener('click', startExam);
+            document.getElementById('save-participant-btn').addEventListener('click', validateAndStartExam);
             document.getElementById('finish-exam-btn').addEventListener('click', finishExam);
             document.getElementById('skip-question-btn').addEventListener('click', skipQuestion);
             document.getElementById('unanswered-btn').addEventListener('click', showUnansweredQuestions);
@@ -2049,22 +2098,49 @@
             document.getElementById('fullname').addEventListener('input', function() {
                 // Convert input to uppercase automatically
                 this.value = this.value.toUpperCase();
+                validateField(this, 'fullname-error', /^[A-Za-z ]+$/, "Nama lengkap harus diisi dan hanya boleh mengandung huruf");
                 checkParticipantFormValidity();
             });
             
-            document.getElementById('school-name').addEventListener('input', checkParticipantFormValidity);
-            document.getElementById('student-id').addEventListener('input', checkParticipantFormValidity);
+            document.getElementById('school-name').addEventListener('input', function() {
+                validateField(this, 'school-error', /.+/, "Nama sekolah harus diisi");
+                checkParticipantFormValidity();
+            });
+            
+            document.getElementById('student-id').addEventListener('input', function() {
+                validateField(this, 'nis-error', /^[0-9]+$/, "NIS harus diisi dan hanya boleh mengandung angka");
+                checkParticipantFormValidity();
+            });
+            
             document.querySelectorAll('input[name="purpose"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
+                radio.addEventListener('change', function() {
+                    document.getElementById('purpose-error').style.display = 'none';
+                    document.getElementById('purpose-radio-group').classList.remove('radio-group-error');
+                    checkParticipantFormValidity();
+                });
             });
+            
             document.querySelectorAll('input[name="level"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
+                radio.addEventListener('change', function() {
+                    document.getElementById('level-error').style.display = 'none';
+                    document.getElementById('level-radio-group').classList.remove('radio-group-error');
+                    checkParticipantFormValidity();
+                });
             });
+            
             document.querySelectorAll('input[name="grade"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
+                radio.addEventListener('change', function() {
+                    document.getElementById('grade-error').style.display = 'none';
+                    checkParticipantFormValidity();
+                });
             });
+            
             document.querySelectorAll('input[name="subject"]').forEach(radio => {
-                radio.addEventListener('change', checkParticipantFormValidity);
+                radio.addEventListener('change', function() {
+                    document.getElementById('subject-error').style.display = 'none';
+                    document.getElementById('subject-radio-group').classList.remove('radio-group-error');
+                    checkParticipantFormValidity();
+                });
             });
 
             // Admin panel toggle switches
@@ -2228,42 +2304,92 @@
             container.appendChild(radioLabel);
         }
         
+        function validateField(field, errorId, pattern, errorMessage) {
+            const errorElement = document.getElementById(errorId);
+            
+            if (!field.value.trim() || !pattern.test(field.value.trim())) {
+                field.classList.add('input-error');
+                errorElement.textContent = errorMessage;
+                errorElement.style.display = 'block';
+                return false;
+            } else {
+                field.classList.remove('input-error');
+                errorElement.style.display = 'none';
+                return true;
+            }
+        }
+        
         function checkParticipantFormValidity() {
             let isValid = true;
             
-            // Check common fields
-            const fullname = document.getElementById('fullname').value.trim();
-            if (!fullname || !/^[A-Za-z ]+$/.test(fullname)) {
+            // Validate fullname
+            const fullname = document.getElementById('fullname');
+            if (!validateField(fullname, 'fullname-error', /^[A-Za-z ]+$/, "Nama lengkap harus diisi dan hanya boleh mengandung huruf")) {
                 isValid = false;
             }
             
-            // Check student fields
-            if (!document.getElementById('school-name').value.trim()) {
+            // Validate school name
+            const schoolName = document.getElementById('school-name');
+            if (!validateField(schoolName, 'school-error', /.+/, "Nama sekolah harus diisi")) {
                 isValid = false;
             }
             
-            const studentId = document.getElementById('student-id').value.trim();
-            if (!studentId || !/^[0-9]+$/.test(studentId)) {
+            // Validate student ID
+            const studentId = document.getElementById('student-id');
+            if (!validateField(studentId, 'nis-error', /^[0-9]+$/, "NIS harus diisi dan hanya boleh mengandung angka")) {
                 isValid = false;
             }
             
+            // Validate purpose
             if (!document.querySelector('input[name="purpose"]:checked')) {
+                document.getElementById('purpose-error').style.display = 'block';
+                document.getElementById('purpose-radio-group').classList.add('radio-group-error');
                 isValid = false;
             }
             
+            // Validate level
             if (!document.querySelector('input[name="level"]:checked')) {
+                document.getElementById('level-error').style.display = 'block';
+                document.getElementById('level-radio-group').classList.add('radio-group-error');
                 isValid = false;
             }
             
+            // Validate grade
             if (!document.querySelector('input[name="grade"]:checked')) {
+                document.getElementById('grade-error').style.display = 'block';
                 isValid = false;
             }
             
+            // Validate subject
             if (!document.querySelector('input[name="subject"]:checked')) {
+                document.getElementById('subject-error').style.display = 'block';
+                document.getElementById('subject-radio-group').classList.add('radio-group-error');
                 isValid = false;
             }
             
             document.getElementById('save-participant-btn').disabled = !isValid;
+            return isValid;
+        }
+        
+        function validateAndStartExam() {
+            if (checkParticipantFormValidity()) {
+                startExam();
+            } else {
+                // Show warning notification
+                const warning = document.getElementById('form-warning');
+                warning.style.display = 'block';
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    warning.style.display = 'none';
+                }, 5000);
+                
+                // Scroll to first error
+                const firstError = document.querySelector('.input-error, .radio-group-error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
         }
         
         function startExam() {
@@ -2599,6 +2725,10 @@
                 }
             }
             
+            // Format NIS and school name for certificate code
+            const formattedNIS = participantData.studentId ? participantData.studentId : '0000';
+            const formattedSchool = participantData.school ? participantData.school.replace(/\s+/g, '-').toUpperCase().substring(0, 10) : 'SEKOLAH';
+            
             // Create certificate HTML
             const certificate = document.createElement('div');
             certificate.className = 'certificate';
@@ -2606,7 +2736,7 @@
             certificate.innerHTML = `
                 <div class="certificate-content">
                     <h1 class="certificate-title">SERTIFIKAT PRESTASI</h1>
-                    <p class="certificate-code">${formatName(participantData.fullname)}/PELAJAR/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${certificateCode}/PERGUNU-STB</p>
+                    <p class="certificate-code">${formatName(participantData.fullname)}/${formattedNIS}/${formattedSchool}/${participantData.level || 'UMUM'}/${participantData.subject || 'UMUM'}/${dateString}/${certificateCode}/PERGUNU-STB</p>
                     <p>Diberikan Kepada</p>
                     <h2 class="certificate-recipient">${formatName(participantData.fullname)}</h2>
                     <p class="certificate-body">
